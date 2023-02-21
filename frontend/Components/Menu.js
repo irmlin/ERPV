@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 export default function Menu() {
-  const navigation = useNavigation();
+  const navigation = useNavigation(); 
 
   const handleProfileButtonClick = () => {
     navigation.navigate('Profile');
