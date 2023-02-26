@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomePage from './Pages/HomePage';
 import ProfilePage from './Pages/ProfilePage';
 import AboutPage from './Pages/AboutPage';
+import CameraComponent from './Components/CameraComponent';
 import {CameraContextProvider} from './Contexts/CameraContext';
 
 const Stack = createNativeStackNavigator();
@@ -17,6 +18,7 @@ export default function App() {
           <Stack.Screen name="Home" component={HomePage}/>
           <Stack.Screen name="Profile" component={ProfilePage} />
           <Stack.Screen name="About" component={AboutPage} />
+          <Stack.Screen name="Scan a package" component={CameraComponent} />
         </Stack.Navigator>
       </NavigationContainer>
     </CameraContextProvider>

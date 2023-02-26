@@ -20,11 +20,11 @@ export default function Menu() {
 
   const handleStartCamera = async () => {
     const status = await Camera.requestCameraPermissionsAsync()
-    console.log(status)
     if (status.status === 'granted') {
+      navigation.navigate('Scan a package');
       setCameraStarted(true)
     } else {
-      Alert.alert('Access denied')
+      Alert.alert('Camera access denied')
     }
   }
 
@@ -32,7 +32,7 @@ export default function Menu() {
     <View>
       <Button title="Profile" onPress={handleProfileButtonClick} />
       <Button title="About" onPress={handleAboutButtonClick} />
-      <Button title="Scan Package" onPress={handleStartCamera} />
+      <Button title="Scan a Package" onPress={handleStartCamera} />
       <Button title="Quiz" onPress={() => {}} />
     </View>
   );

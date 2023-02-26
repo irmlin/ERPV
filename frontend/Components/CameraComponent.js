@@ -1,8 +1,9 @@
 import {StatusBar} from 'expo-status-bar'
 import { useContext, useRef, useState } from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image} from 'react-native'
-import {Camera} from 'expo-camera'
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native'
+import {Camera, CameraType} from 'expo-camera'
 import {CameraContext} from '../Contexts/CameraContext';
+import CameraPreview from './CameraPreview';
 
 
 export default function CameraComponent() {
@@ -16,36 +17,24 @@ export default function CameraComponent() {
     if (!cameraRef.current)
       return
     const photo = await cameraRef.current.takePictureAsync()
-    console.log(photo)
     setPreviewVisible(true)
     setCapturedImage(photo)
   }
 
-  const CameraPreview = (photo) => {
-    console.log('camera preview', photo)
-    return (
-      <View
-        style={{
-          backgroundColor: 'transparent',
-          flex: 1,
-          width: '100%',
-          height: '100%'
-        }}
-      >
-        <ImageBackground
-          source={{uri: photo && photo.uri}}
-          style={{
-            flex: 1
-          }}
-        />
-      </View>
-    )
+  const savePhoto = () => {}
+
+  const retakePhoto = () => {
+    console.log('im trigerrrrred')
+    setCapturedImage(null)
+    setPreviewVisible(false)
+    // startCamera()
   }
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
+      // flex: 1,
       backgroundColor: '#fff',
+      // backgroundColor: 'red',
       alignItems: 'center',
       justifyContent: 'center'
     }
@@ -54,20 +43,21 @@ export default function CameraComponent() {
   return (
     <View style={styles.container}>
       { 
-        cameraStarted ?
+        cameraStarted &&
         (
           <View
             style={{
-              flex: 1,
-              width: '100%'
+              // flex: 1,
+              width: '100%',
+              height: '90%'
             }}
           >
             {
               previewVisible && capturedImage ? (
-                <CameraPreview photo={capturedImage} />
+                <CameraPreview photo={capturedImage} savePhoto={savePhoto} retakePhoto={retakePhoto} />
               ) : (
                 <Camera
-                  style={{flex: 1, width:"100%"}}
+                  style={{flex: 1}}
                   ref={cameraRef}
                 >
                   <View
@@ -104,7 +94,7 @@ export default function CameraComponent() {
               )
             }
           </View>
-        ) : (<View><Text>daskjndajksndakjs</Text></View>)
+        )
       }
       <StatusBar style="auto" />
     </View>
