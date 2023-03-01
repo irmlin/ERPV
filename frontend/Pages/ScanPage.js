@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
 
-export default function ProfilePage({navigation}) {
+export default function ScanPage({navigation}) {
   return (
     <View>
       <Text>
-        Aviukai :) Amen
+        Reikia skenuoti zenkliuka
       </Text>
     </View>
   );
