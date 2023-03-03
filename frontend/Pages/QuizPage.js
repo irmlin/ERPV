@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
 
-export default function ProfilePage({navigation}) {
+export default function QuizPage({navigation}) {
   return (
     <View>
       <Text>
-        Aviukai :) Amen
+        Kas yla lusiavimas?
       </Text>
     </View>
   );
