@@ -1,9 +1,9 @@
 import { View, Text, Button } from "react-native";
 
-export default function AboutPage({navigation}) {
+export default function AvatarPage({navigation}) {
   return (
     <View>
-      <Text>About</Text>
+      <Text>Avatariukai</Text>
     </View>
   );
 }

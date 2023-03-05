@@ -7,6 +7,9 @@ import ProfilePage from './Pages/ProfilePage';
 import AboutPage from './Pages/AboutPage';
 import CameraComponent from './Components/CameraComponent';
 import {CameraContextProvider} from './Contexts/CameraContext';
+import AvatarPage from './Pages/AvatarPage';
+import QuizPage from './Pages/QuizPage';
+import ScanPage from './Pages/ScanPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,11 +17,25 @@ export default function App() {
   return (
     <CameraContextProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomePage}/>
+        <Stack.Navigator
+        screenOptions={{
+            title:'Vėžliukai rūšiuoja',
+            headerStyle:{
+              backgroundColor: '#2e7698',
+            },
+            headerTitleAlign: "center",
+            headerTitleStyle:{
+              fontWeight: 'bold',
+              fontSize: 30,
+            }
+          }}
+          >
+          <Stack.Screen name="Home" component={HomePage}
+          />
           <Stack.Screen name="Profile" component={ProfilePage} />
-          <Stack.Screen name="About" component={AboutPage} />
-          <Stack.Screen name="Scan a package" component={CameraComponent} />
+          <Stack.Screen name="Avatar" component={AvatarPage} />
+          <Stack.Screen name="Scan" component={ScanPage} />
+          <Stack.Screen name="Quiz" component={QuizPage} /> 
         </Stack.Navigator>
       </NavigationContainer>
     </CameraContextProvider>
@@ -31,5 +48,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
