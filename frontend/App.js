@@ -1,11 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomePage from './Pages/HomePage';
 import ProfilePage from './Pages/ProfilePage';
-import AboutPage from './Pages/AboutPage';
-import CameraComponent from './Components/CameraComponent';
 import {CameraContextProvider} from './Contexts/CameraContext';
 import AvatarPage from './Pages/AvatarPage';
 import QuizPage from './Pages/QuizPage';
@@ -30,8 +27,7 @@ export default function App() {
             }
           }}
           >
-          <Stack.Screen name="Home" component={HomePage}
-          />
+          <Stack.Screen name="Home" component={HomePage}/>
           <Stack.Screen name="Profile" component={ProfilePage} />
           <Stack.Screen name="Avatar" component={AvatarPage} />
           <Stack.Screen name="Scan" component={ScanPage} />

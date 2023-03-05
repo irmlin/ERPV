@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Button, Alert } from 'react-native';
 import { useContext } from 'react';
-import { View, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Button, Alert, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {Camera} from 'expo-camera'
 import {CameraContext} from '../Contexts/CameraContext';
@@ -14,7 +13,7 @@ export default function Menu() {
   const handleStartCamera = async () => {
     const status = await Camera.requestCameraPermissionsAsync()
     if (status.status === 'granted') {
-      navigation.navigate('Scan a package');
+      navigation.navigate('Scan');
       setCameraStarted(true)
     } else {
       Alert.alert('Camera access denied')
@@ -97,7 +96,6 @@ export default function Menu() {
       <TouchableOpacity activeOpacity={0.95} style={styles.button} onPress={handleStartCamera}>
       <Text style={styles.text}>Pakuočių skenavimas </Text>
       </TouchableOpacity>
-
     </View>
   );
 }

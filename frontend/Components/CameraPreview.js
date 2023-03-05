@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 export default function CameraPreview ({photo, retakePhoto, savePhoto})  {
-  console.log('sdsfds', photo)
+
   return (
     <View
       style={{
