@@ -13,6 +13,7 @@ export default function CameraComponent() {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [flashMode, setFlashMode] = useState('off')
 
   const takePicture = async () => {
     if (!cameraRef.current)
@@ -36,6 +37,17 @@ export default function CameraComponent() {
   const retakePhoto = () => {
     setCapturedImage(null)
     setPreviewVisible(false)
+  }
+
+  const handleFlashMode = () => {
+    console.log(flashMode)
+    if (flashMode === 'on') {
+      setFlashMode('off')
+    } else if (flashMode === 'off') {
+      setFlashMode('on')
+    } else {
+      setFlashMode('auto')
+    }
   }
 
   const styles = StyleSheet.create({
@@ -69,8 +81,45 @@ export default function CameraComponent() {
                 <Camera
                   style={{flex: 1}}
                   ref={cameraRef}
+                  flashMode={flashMode}
                 >
-                  <ActivityIndicator size={90} color="#00ff00" animating={loading} style={{flex:1}}/>
+                  <View
+                    style={{
+                      flex: 1,
+                      width: '100%',
+                      backgroundColor: 'transparent',
+                      flexDirection: 'row'
+                    }}
+                  >
+                    <View
+                      style={{
+                        position: 'absolute',
+                        left: '5%',
+                        top: '10%',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={handleFlashMode}
+                        style={{
+                          backgroundColor: flashMode === 'off' ? '#000' : '#fff',
+                          borderRadius: 20,
+                          height: 30,
+                          width: 30
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 23
+                          }}
+                        >
+                          ⚡️
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    <ActivityIndicator size={90} color="#00ff00" animating={loading} style={{flex:1}}/>
+                  </View>
                 </Camera>
               )
             }
