@@ -7,8 +7,6 @@ export default function CameraPreview ({photo, retakePhoto, savePhoto})  {
   return (
     <View
       style={{
-        // backgroundColor: 'transparent',
-        // backgroundColor: 'red',
         flex: 1,
         width: '100%',
         height: '100%'
@@ -37,35 +35,8 @@ export default function CameraPreview ({photo, retakePhoto, savePhoto})  {
             <TouchableOpacity
               onPress={retakePhoto}
             >
-              {/* <Text
-                style={{
-                  color: '#fff',
-                  fontSize: 20
-                }}
-              >
-                Re-take
-              </Text> */}
               <Icon name="reload" size={50} color="white" />
             </TouchableOpacity>
-            {/* <TouchableOpacity
-              onPress={savePhoto}
-              style={{
-                width: 130,
-                height: 40,
-                backgroundColor: 'green',
-                alignItems: 'center',
-                borderRadius: 4
-              }}
-            >
-              <Text
-                style={{
-                  color: '#fff',
-                  fontSize: 20
-                }}
-              >
-                save photo
-              </Text>
-            </TouchableOpacity> */}
           </View>
         </View>
       </ImageBackground>

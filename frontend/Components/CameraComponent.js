@@ -52,8 +52,6 @@ export default function CameraComponent() {
 
   const styles = StyleSheet.create({
     container: {
-      // flex: 1,
-      // backgroundColor: '#fff',
       height: "100%",
       backgroundColor: 'black',
       alignItems: 'center',
@@ -68,7 +66,6 @@ export default function CameraComponent() {
         (
           <View
             style={{
-              // flex: 1,
               width: '100%',
               height: '67%',
               marginBottom: 100
