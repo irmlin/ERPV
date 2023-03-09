@@ -7,6 +7,7 @@ import ProfilePage from './Pages/ProfilePage';
 import AvatarPage from './Pages/AvatarPage';
 import QuizPage from './Pages/QuizPage';
 import ScanPage from './Pages/ScanPage';
+import GamePage from './Pages/GamePage';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ export default function App() {
         <Stack.Screen name="Avatar" component={AvatarPage} />
         <Stack.Screen name="Scan" component={ScanPage} />
         <Stack.Screen name="Quiz" component={QuizPage} /> 
+        <Stack.Screen name="Game" component={GamePage} /> 
       </Stack.Navigator>
     </NavigationContainer>
   );

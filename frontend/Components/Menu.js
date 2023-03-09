@@ -21,6 +21,9 @@ export default function Menu() {
   const handleScanButtonClick = () => {
     navigation.navigate('Scan');
   };
+  const handleGameButtonClick = () => {
+    navigation.navigate('Game');
+  };
 
   /*const styles = StyleSheet.create({
     container: {
@@ -41,26 +44,29 @@ export default function Menu() {
       borderBottomColor: '#737373',
       borderBottomWidth: StyleSheet.hairlineWidth,
     },
-  });*/
+  });
+  
+  
+       */
 
   const styles = StyleSheet.create({
     parent: {
-        width: 600,
-        height: 1000,
+      width: '100%',
+      height: '100%',
         backgroundColor: '#add8e6',
         margin: 0,
     },
     button: {
         flexDirection: 'row', 
-        height: 80, 
-        width: 300,
+        height: '13%', 
+        width: '60%',
         backgroundColor: '#3a9fbf',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 100,
-        marginLeft: 150,
+        marginTop: '10%',
+        marginLeft: '20%',
         elevation: 10,
-        borderRadius: 15,
+        borderRadius: 17,
     },
     text: {
         fontSize: 20,
@@ -81,6 +87,9 @@ export default function Menu() {
       </TouchableOpacity>
       <TouchableOpacity activeOpacity={0.95} style={styles.button} onPress={handleScanButtonClick}>
       <Text style={styles.text}>Pakuočių skenavimas </Text>
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.95} style={styles.button} onPress={handleGameButtonClick}>
+      <Text style={styles.text}>Žaidiimas </Text>
       </TouchableOpacity>
 
     </View>
