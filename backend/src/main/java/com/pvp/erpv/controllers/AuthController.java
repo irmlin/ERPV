@@ -1,13 +1,10 @@
 package com.pvp.erpv.controllers;
 
-import com.pvp.erpv.models.ERole;
-import com.pvp.erpv.models.Role;
 import com.pvp.erpv.models.User;
 import com.pvp.erpv.payload.request.LoginRequest;
 import com.pvp.erpv.payload.request.SignupRequest;
 import com.pvp.erpv.payload.response.MessageResponse;
 import com.pvp.erpv.payload.response.UserInfoResponse;
-import com.pvp.erpv.repository.RoleRepository;
 import com.pvp.erpv.repository.UserRepository;
 import com.pvp.erpv.security.jwt.JwtUtils;
 import com.pvp.erpv.security.services.UserDetailsImpl;
@@ -43,15 +40,12 @@ public class AuthController {
   UserRepository userRepository;
 
   @Autowired
-  RoleRepository roleRepository;
-
-  @Autowired
   PasswordEncoder encoder;
 
   @Autowired
   JwtUtils jwtUtils;
 
-  @PostMapping("/signin")
+  @PostMapping("/login")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
     Authentication authentication = authenticationManager
@@ -63,18 +57,13 @@ public class AuthController {
 
     ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
-    List<String> roles = userDetails.getAuthorities().stream()
-        .map(GrantedAuthority::getAuthority)
-        .collect(Collectors.toList());
-
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
         .body(new UserInfoResponse(userDetails.getId(),
             userDetails.getUsername(),
-            userDetails.getEmail(),
-            roles));
+            userDetails.getEmail()));
   }
 
-  @PostMapping("/signup")
+  @PostMapping("/register")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
     if (userRepository.existsByUsername(signUpRequest.getUsername())) {
       return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
@@ -89,34 +78,12 @@ public class AuthController {
         signUpRequest.getEmail(),
         encoder.encode(signUpRequest.getPassword()));
 
-    Set<String> strRoles = signUpRequest.getRole();
-    Set<Role> roles = new HashSet<>();
-
-    if (strRoles == null) {
-      Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-      roles.add(userRole);
-    } else {
-      strRoles.forEach(role -> {
-        if (role.equals("admin")) {
-          Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-          roles.add(adminRole);
-        } else {
-          Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-          roles.add(userRole);
-        }
-      });
-    }
-
-    user.setRoles(roles);
     userRepository.save(user);
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
 
-  @PostMapping("/signout")
+  @PostMapping("/logout")
   public ResponseEntity<?> logoutUser() {
     ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())

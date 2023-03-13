@@ -15,15 +15,8 @@ public class TestController {
     return "Public Content.";
   }
 
-  @GetMapping("/user")
-  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-  public String userAccess() {
-    return "User Content.";
-  }
-
-  @GetMapping("/admin")
-  @PreAuthorize("hasRole('ADMIN')")
-  public String adminAccess() {
-    return "Admin Board.";
+  @GetMapping("/authenticated")
+  public String authAccess() {
+    return "Private Content.";
   }
 }

@@ -2,7 +2,9 @@ package com.pvp.erpv.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pvp.erpv.models.User;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -34,9 +36,8 @@ public class UserDetailsImpl implements UserDetails {
   }
 
   public static UserDetailsImpl build(User user) {
-    List<GrantedAuthority> authorities = user.getRoles().stream()
-        .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-        .collect(Collectors.toList());
+    List<GrantedAuthority> authorities = new ArrayList<>(
+        Collections.singleton((new SimpleGrantedAuthority("ROLE_USER"))));
 
     return new UserDetailsImpl(
         user.getId(),
