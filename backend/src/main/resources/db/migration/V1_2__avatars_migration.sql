@@ -1,4 +1,3 @@
 CREATE TABLE IF NOT EXISTS avatars (
-    id UUID,
-    PRIMARY KEY (id)
+    id SERIAL PRIMARY KEY
 );
