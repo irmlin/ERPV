@@ -15,25 +15,35 @@ export default function LoginPage() {
 
   const navigation = useNavigation();
   const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLoginButtonClick = () => {
-    navigation.navigate("Home");
-  };
+  const handleRegisterButtonClick = async () => {
+    const response = await registerNewUser(userName, email, password);
+    if (response.status === 200) {
+      
+    } else {
 
-  const handleRegisterButtonClick = () => {
-    navigation.navigate("Register");
+    }
+    navigation.navigate("Login");
   };
-
 
   return (
     <View style={authPageStyles.parent}>
       <View style={authPageStyles.inputView}>
         <TextInput
           style={authPageStyles.textInput}
-          placeholder="Vartotojo Vardas"
+          placeholder="Vartotojo vardas"
           placeholderTextColor="#003f5c"
           onChangeText={(userNameInput) => setUserName(userNameInput)}
+        />
+      </View>
+      <View style={authPageStyles.inputView}>
+        <TextInput
+          style={authPageStyles.textInput}
+          placeholder="Elektroninio pašto adresas"
+          placeholderTextColor="#003f5c"
+          onChangeText={(emailInput) => setEmail(emailInput)}
         />
       </View>
       <View style={authPageStyles.inputView}>
@@ -45,11 +55,8 @@ export default function LoginPage() {
           onChangeText={(passwordInput) => setPassword(passwordInput)}
         />
       </View>
-      <TouchableOpacity style={authPageStyles.btn} onPress={handleLoginButtonClick}>
-        <Text style={authPageStyles.btnText}>Prisijungti</Text>
-      </TouchableOpacity>
       <TouchableOpacity style={authPageStyles.btn} onPress={handleRegisterButtonClick}>
-        <Text style={authPageStyles.btnText}>Naujas vartotojas? Registruokis čia</Text>
+        <Text style={authPageStyles.btnText}>Registruotis</Text>
       </TouchableOpacity>
     </View>
   );

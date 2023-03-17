@@ -9,6 +9,7 @@ import QuizPage from "./Pages/QuizPage";
 import ScanPage from "./Pages/ScanPage";
 import GamePage from "./Pages/GamePage";
 import LoginPage from "./Pages/LoginPage";
+import RegisterPage from "./Pages/RegisterPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Login" component={LoginPage} />
+          <Stack.Screen name="Register" component={RegisterPage} />
           <Stack.Screen name="Home" component={HomePage} />
           <Stack.Screen name="Profile" component={ProfilePage} />
           <Stack.Screen name="Avatar" component={AvatarPage} />
