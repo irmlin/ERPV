@@ -25,7 +25,8 @@ export const authPageStyles = StyleSheet.create({
     flex: 1,
     padding: 10,
     marginLeft: 20,
-    fontStyle: "italic"
+    fontStyle: "italic",
+    textAlign: "center",
   },
   btn: {
     width: "80%",
@@ -33,7 +34,7 @@ export const authPageStyles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 40,
+    marginTop: 10,
     backgroundColor: "#3a9fbf",
   },
   btnText: {
