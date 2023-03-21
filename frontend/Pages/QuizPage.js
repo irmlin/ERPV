@@ -1,11 +1,11 @@
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
+import Quiz from "../Components/Quiz";
 
 export default function QuizPage({navigation}) {
+
   return (
     <View>
-      <Text>
-        Kas yla lusiavimas?
-      </Text>
+      <Quiz/>
     </View>
   );
 }
