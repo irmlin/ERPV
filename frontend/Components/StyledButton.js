@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -28,9 +28,9 @@ export default function StyledButton({buttonText, onPressAction}) {
 
   return (
     <TouchableOpacity
-      activeOpacity={0.95}
+      activeOpacity={0.5}
       style={styles.button}
-      onPress={onPressAction}
+      onPress={() => onPressAction()}
     >
       <Text style={styles.text}>{buttonText}</Text>
     </TouchableOpacity>

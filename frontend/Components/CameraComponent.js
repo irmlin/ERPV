@@ -1,25 +1,30 @@
 import {StatusBar} from 'expo-status-bar'
 import { useContext, useRef, useState } from 'react';
+import * as FileSystem from 'expo-file-system';
 import {StyleSheet, Text, View, TouchableOpacity, ActivityIndicator} from 'react-native'
-import {Camera, CameraType} from 'expo-camera'
+import {Camera} from 'expo-camera'
 import {CameraContext} from '../Contexts/CameraContext';
 import CameraPreview from './CameraPreview';
+import { scanPackage } from '../Services/ScannerService';
+import { GlobalAlertContext } from '../Contexts/GlobalAlertContext';
 
 
 export default function CameraComponent() {
 
   const cameraRef = useRef(null);
+  const { setAlertOpen, setAlertColor, setAlertText } = useContext(GlobalAlertContext);
   const { cameraStarted, setCameraStarted } = useContext(CameraContext);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [flashMode, setFlashMode] = useState('off')
+  const [boxes, setBoxes] = useState([]);
 
   const takePicture = async () => {
     if (!cameraRef.current)
       return
     
-    const photo = await new Promise(async resolve => {
+    const image = await new Promise(async resolve => {
       setLoading(true)
       await cameraRef.current.takePictureAsync({onPictureSaved : resolve});
       cameraRef.current.pausePreview();
@@ -27,16 +32,59 @@ export default function CameraComponent() {
     cameraRef.current.resumePreview();
 
     setLoading(false);
-    // really bad, but will work for now
-    setTimeout(() => setPreviewVisible(true), 1)
-    setCapturedImage(photo);
+    setTimeout(() => setPreviewVisible(true), 1);
+    setCapturedImage(image);
+
+    await detectSigns(image);
+  }
+
+  const detectSigns = async (image) => {
+    
+    const base64Image = await FileSystem.readAsStringAsync(image.uri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    const response = await scanPackage(base64Image);
+
+    if (response) {
+      if (response.status === 200) {
+        const predictionData = JSON.parse(response.data);
+        
+        if (predictionData["bboxes"].length) {
+          console.log("Received", predictionData["bboxes"][0].length, "predictions");
+        } else {
+          setAlertColor("error");
+          setAlertText("Rūšiavimo ženkliukų neaptikta!");
+          setAlertOpen(true);
+          console.log("Received 0 predictions");
+        }
+        
+        const processedBboxes = [];
+        predictionData["bboxes"].map(image => {
+          image.map(bboxData => {
+            let [x1, y1] = bboxData.slice(0, 2);
+            let [x2, y2] = bboxData.slice(2, 4);
+            let boxWidth = x2 - x1;
+            let boxHeight = y2 - y1;
+            let confidence = bboxData[4];
+            processedBboxes.push([x1, y1, boxWidth, boxHeight, confidence])
+          })
+        })
+        setBoxes(processedBboxes);
+      } else {
+        console.log("Bad request while processing image");
+      }
+    } else {
+      console.log("Server error occured while processing image");
+    }
   }
 
   const savePhoto = () => {}
 
   const retakePhoto = () => {
-    setCapturedImage(null)
-    setPreviewVisible(false)
+    setCapturedImage(null);
+    setPreviewVisible(false);
+    setBoxes([]);
   }
 
   const handleFlashMode = () => {
@@ -73,7 +121,7 @@ export default function CameraComponent() {
           >
             {
               previewVisible && capturedImage ? (
-                <CameraPreview photo={capturedImage} savePhoto={savePhoto} retakePhoto={retakePhoto} />
+                <CameraPreview photo={capturedImage} boxes={boxes} savePhoto={savePhoto} retakePhoto={retakePhoto} />
               ) : (
                 <Camera
                   style={{flex: 1}}
