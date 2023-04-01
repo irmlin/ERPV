@@ -1,4 +1,6 @@
-# Launching the API locally
-* Create a postgresql docker container `docker-compose up -d`
+# Launching the API locally (both Spring Boot and Fast API (python))
+* Put [object detection model](https://drive.google.com/file/d/1M19b2kqiyyekrYv8H13plyp04aqCnLGt/view?usp=share_link) in ERPV/computer_vision_api/models
+* Create a postgresql docker container, also creates python API container and runs it `docker-compose up -d`
 * `./mvnw clean flyway:migrate -D"flyway.configFiles"="flywayConfig.conf"` to run migrations
 * Run the application
+* When you're done, remove the containers `docker-compose down`
