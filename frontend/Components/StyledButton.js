@@ -12,6 +12,7 @@ export default function StyledButton({buttonText, onPressAction}) {
       flexDirection: "row",
       height: "13%",
       width: "60%",
+      backgroundColor: "#3a9fbf",
       alignItems: "center",
       justifyContent: "center",
       marginTop: "10%",
@@ -35,4 +36,3 @@ export default function StyledButton({buttonText, onPressAction}) {
     </TouchableOpacity>
   );
 }
-

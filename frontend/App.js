@@ -25,13 +25,26 @@ export default function App() {
     <CameraContextProvider>
       <GlobalAlertContextProvider>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator
+            screenOptions={{
+              title: "Vėžliukai rūšiuoja",
+              headerStyle: {
+                backgroundColor: "#2e7698",
+              },
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontWeight: "bold",
+                fontSize: 30,
+              },
+            }}
+          >
             {/*<Stack.Screen name="Login" component={LoginPage} />
             <Stack.Screen name="Register" component={RegisterPage} />*/}
             <Stack.Screen
               name="Home"
               component={HomePage}
               options={{ headerBackVisible: false }}
+            />
             <Stack.Screen name="Profile" component={ProfilePage} />
             <Stack.Screen name="Avatar" component={AvatarPage} />
             <Stack.Screen name="Scan" component={ScanPage} />
