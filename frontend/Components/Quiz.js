@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, SafeAreaView, StatusBar, Image, TouchableOpacity, Modal, Animated, StyleSheet, } from 'react-native';
 import data from '../data/QuizData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from "react-native";
+
 
 export default function Quiz()  {
 
+    const navigation = useNavigation();
     const allQuestions = data;
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
@@ -62,6 +65,10 @@ export default function Quiz()  {
             duration: 1000,
             useNativeDriver: false
         }).start();
+    };
+
+    const toHomePage = () => {
+        navigation.navigate("Home");
     };
 
     const renderQuestion = () => {
@@ -280,8 +287,17 @@ export default function Quiz()  {
                                }}>Pakartoti</Text>
                            </TouchableOpacity>
 
+                           <TouchableOpacity
+                           onPress={toHomePage}
+                           style={{
+                               backgroundColor: '#107dac',
+                               padding: 30, width: '95%', borderRadius: 20, marginBottom: '2%'
+                           }}>
+                               <Text style={{
+                                   textAlign: 'center', color: '#F2F2FC', fontSize: 25, fontWeight: '500'
+                               }}>Pagrindinis puslapis</Text>
+                           </TouchableOpacity>
                        </View>
-
                    </View>
                </Modal>
 

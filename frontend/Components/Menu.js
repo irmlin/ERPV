@@ -28,7 +28,7 @@ export default function Menu() {
   };
 
   const handleProfileButtonClick = () => {
-    navigation.navigate("Profile");
+    navigation.navigate("Home");
   };
 
   const handleAvatarButtonClick = () => {
