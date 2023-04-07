@@ -8,15 +8,15 @@ import AvatarPage from "./Pages/AvatarPage";
 import QuizPage from "./Pages/QuizPage";
 import ScanPage from "./Pages/ScanPage";
 import GamePage from "./Pages/GamePage";
+import AwardsPage from "./Pages/AwardsPage";
 import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegistrationPage";
 import { GlobalAlertContextProvider } from "./Contexts/GlobalAlertContext";
 import Alert from "./Components/Alert";
 
-import { LogBox } from 'react-native';
-LogBox.ignoreLogs(['Warning: ...']);
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]);
 LogBox.ignoreAllLogs();
-
 
 const Stack = createNativeStackNavigator();
 
@@ -25,23 +25,22 @@ export default function App() {
     <CameraContextProvider>
       <GlobalAlertContextProvider>
         <NavigationContainer>
-          <Stack.Navigator 
-          
-            
-          >
-           {/* <Stack.Screen name="Login" component={LoginPage} />*/}
-           {/* <Stack.Screen name="Register" component={RegisterPage} /> */}
-            <Stack.Screen name="Home" component={HomePage} options={{ headerBackVisible: false }}  options={{
-            headerShown: false,
-          }} />
+          <Stack.Navigator>
+            {/*<Stack.Screen name="Login" component={LoginPage} />
+            <Stack.Screen name="Register" component={RegisterPage} />*/}
+            <Stack.Screen
+              name="Home"
+              component={HomePage}
+              options={{ headerBackVisible: false }}
             <Stack.Screen name="Profile" component={ProfilePage} />
             <Stack.Screen name="Avatar" component={AvatarPage} />
             <Stack.Screen name="Scan" component={ScanPage} />
             <Stack.Screen name="Quiz" component={QuizPage} />
             <Stack.Screen name="Game" component={GamePage} />
+            <Stack.Screen name="Awards" component={AwardsPage} />
           </Stack.Navigator>
         </NavigationContainer>
-        <Alert duration={4000}/>
+        <Alert duration={4000} />
       </GlobalAlertContextProvider>
     </CameraContextProvider>
   );
