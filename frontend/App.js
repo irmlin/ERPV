@@ -31,7 +31,11 @@ export default function App() {
             <Stack.Screen
               name="Home"
               component={HomePage}
-              options={{ headerBackVisible: false }}
+              options={{
+                headerBackVisible: false,
+                headerShown: false,
+              }}
+            />
             <Stack.Screen name="Profile" component={ProfilePage} />
             <Stack.Screen name="Avatar" component={AvatarPage} />
             <Stack.Screen name="Scan" component={ScanPage} />
