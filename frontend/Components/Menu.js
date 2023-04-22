@@ -40,8 +40,8 @@ export default function Menu() {
     navigation.navigate("Quiz");
   };
 
-  const handleGameButtonClick = () => {
-    navigation.navigate("Game");
+  const handleCoursesButtonClick = () => {
+    navigation.navigate("Courses");
   };
 
   const styles = StyleSheet.create({
@@ -152,13 +152,13 @@ export default function Menu() {
         <TouchableOpacity
           activeOpacity={0.95}
           style={[stylesb.button, { backgroundColor: "#70D66E" }]}
-          onPress={handleGameButtonClick}
+          onPress={handleCoursesButtonClick}
         >
           <Image
-            source={require("frontend/assets/zaidimo_ikona-01.png")}
+            source={require("frontend/assets/laboratorijos_ikona.png")}
             style={stylesb.buttonImageIconStyle}
           />
-          <Text style={stylesb.text}>Žaidimas</Text>
+          <Text style={stylesb.text}>Mokslo kampelis</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
