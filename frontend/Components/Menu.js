@@ -8,12 +8,11 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  ImageBackground, 
+  ImageBackground,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Camera } from "expo-camera";
 import { CameraContext } from "../Contexts/CameraContext";
-import StyledButton from "./StyledButton";
 
 export default function Menu() {
   const navigation = useNavigation();
@@ -45,7 +44,6 @@ export default function Menu() {
     navigation.navigate("Game");
   };
 
-
   const styles = StyleSheet.create({
     parent: {
       width: "100%",
@@ -55,7 +53,7 @@ export default function Menu() {
     },
     image: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: "center",
     },
   });
 
@@ -71,8 +69,8 @@ export default function Menu() {
       borderRadius: 15,
       borderColor: "white",
       borderWidth: 5,
-      
-    justifyContent: 'center',
+
+      justifyContent: "center",
     },
     text: {
       fontSize: 27,
@@ -82,91 +80,87 @@ export default function Menu() {
     buttonImageIconStyle: {
       height: "70%",
       width: "20%",
-      resizeMode: 'contain',
+      resizeMode: "contain",
     },
     image: {
       width: 250,
       height: 250,
       alignSelf: "center",
     },
-  })
+  });
 
   return (
     <View style={styles.parent}>
-      <ImageBackground 
-      source={require("frontend/assets/background_quiz-01.png")} 
-      style={styles.image}>
-
-      <View style={styles.imageBlock}>
-        <Image
-          source={require("frontend/assets/Logo_baltas.png")}
-          style={stylesb.image}
-        ></Image>
+      <ImageBackground
+        source={require("frontend/assets/background_quiz-01.png")}
+        style={styles.image}
+      >
+        <View style={styles.imageBlock}>
+          <Image
+            source={require("frontend/assets/Logo_baltas.png")}
+            style={stylesb.image}
+          ></Image>
         </View>
-      <TouchableOpacity
-        activeOpacity={0.95}
-        style={[stylesb.button, {backgroundColor:"#FAC643"}]}
-        onPress={handleProfileButtonClick}
-      >
-        <Image
-            source={require("frontend/assets/profilio_ikona-01.png")} 
+        <TouchableOpacity
+          activeOpacity={0.95}
+          style={[stylesb.button, { backgroundColor: "#FAC643" }]}
+          onPress={handleProfileButtonClick}
+        >
+          <Image
+            source={require("frontend/assets/profilio_ikona-01.png")}
             style={stylesb.buttonImageIconStyle}
           />
-        <Text style={stylesb.text}>Profilis</Text>
-      </TouchableOpacity>
+          <Text style={stylesb.text}>Profilis</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-      activeOpacity={0.95}
-      style={[stylesb.button, {backgroundColor:"#70D66E"}]}
-      onPress={handleAvatarButtonClick}
-      >
-         <Image
-            source={require("frontend/assets/avataru_ikona-01.png")} 
+        <TouchableOpacity
+          activeOpacity={0.95}
+          style={[stylesb.button, { backgroundColor: "#70D66E" }]}
+          onPress={handleAvatarButtonClick}
+        >
+          <Image
+            source={require("frontend/assets/avataru_ikona-01.png")}
             style={stylesb.buttonImageIconStyle}
           />
-        <Text style={stylesb.text}>Avatarai</Text>
-      </TouchableOpacity>
+          <Text style={stylesb.text}>Avatarai</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-      activeOpacity={0.95}
-      style={[stylesb.button, {backgroundColor:"#6DD8E7"}]}
-      onPress={handleQuizButtonClick}
-      >
-         <Image
-            source={require("frontend/assets/klausimyno_ikona-01.png")} 
+        <TouchableOpacity
+          activeOpacity={0.95}
+          style={[stylesb.button, { backgroundColor: "#6DD8E7" }]}
+          onPress={handleQuizButtonClick}
+        >
+          <Image
+            source={require("frontend/assets/klausimyno_ikona-01.png")}
             style={stylesb.buttonImageIconStyle}
           />
-        <Text style={stylesb.text}>Klausimynas</Text>
-      </TouchableOpacity>
+          <Text style={stylesb.text}>Klausimynas</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-      activeOpacity={0.95}
-      style={[stylesb.button, {backgroundColor:"#FAC643"}]}
-      onPress={handleStartCamera}
-      >
-         <Image
-            source={require("frontend/assets/skenavimo_ikona-01.png")} 
+        <TouchableOpacity
+          activeOpacity={0.95}
+          style={[stylesb.button, { backgroundColor: "#FAC643" }]}
+          onPress={handleStartCamera}
+        >
+          <Image
+            source={require("frontend/assets/skenavimo_ikona-01.png")}
             style={stylesb.buttonImageIconStyle}
           />
-        <Text style={stylesb.text}>Skenavimas</Text>
-      </TouchableOpacity>
+          <Text style={stylesb.text}>Skenavimas</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-      activeOpacity={0.95}
-      style={[stylesb.button, {backgroundColor:"#70D66E"}]}
-      onPress={handleGameButtonClick}
-      >
-         <Image
-            source={require("frontend/assets/zaidimo_ikona-01.png")} 
+        <TouchableOpacity
+          activeOpacity={0.95}
+          style={[stylesb.button, { backgroundColor: "#70D66E" }]}
+          onPress={handleGameButtonClick}
+        >
+          <Image
+            source={require("frontend/assets/zaidimo_ikona-01.png")}
             style={stylesb.buttonImageIconStyle}
           />
-        <Text style={stylesb.text}>Žaidimas</Text>
-      </TouchableOpacity>
+          <Text style={stylesb.text}>Žaidimas</Text>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
-
-    
   );
 }
-
-

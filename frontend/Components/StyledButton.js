@@ -1,33 +1,38 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, Dimensions } from "react-native";
 
-export default function StyledButton({buttonText, onPressAction}) {
+export default function StyledButton({
+  buttonText,
+  onPressAction,
+  buttonColor,
+}) {
+  const { width, height } = Dimensions.get("window");
+  const fontScale = Math.min(width, height) / 400;
 
   const styles = StyleSheet.create({
     button: {
       flexDirection: "row",
-      height: "13%",
-      width: "60%",
+      height: "7%",
+      width: "80%",
       alignItems: "center",
+      marginTop: "5%",
+      elevation: 5,
+      borderRadius: 15,
+      borderColor: "white",
+      borderWidth: 5,
+      backgroundColor: buttonColor,
       justifyContent: "center",
-      marginTop: "10%",
-      marginLeft: "20%",
-      elevation: 10,
-      borderRadius: 17,
     },
     text: {
-      fontSize: 20,
+      fontSize: 24 * fontScale,
       fontWeight: "bold",
+      color: "white",
     },
   });
 
   return (
     <TouchableOpacity
-      activeOpacity={0.95}
+      activeOpacity={0.8}
       style={styles.button}
       onPress={onPressAction}
     >
@@ -35,4 +40,3 @@ export default function StyledButton({buttonText, onPressAction}) {
     </TouchableOpacity>
   );
 }
-

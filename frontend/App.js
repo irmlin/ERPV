@@ -26,8 +26,22 @@ export default function App() {
       <GlobalAlertContextProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            {/*<Stack.Screen name="Login" component={LoginPage} />
-            <Stack.Screen name="Register" component={RegisterPage} />*/}
+            <Stack.Screen
+              name="Login"
+              component={LoginPage}
+              options={{
+                headerBackVisible: false,
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={RegisterPage}
+              options={{
+                headerBackVisible: false,
+                headerShown: false,
+              }}
+            />
             <Stack.Screen
               name="Home"
               component={HomePage}
