@@ -14,10 +14,13 @@ import { useNavigation } from "@react-navigation/native";
 import { Camera } from "expo-camera";
 import { CameraContext } from "../Contexts/CameraContext";
 import StyledButton from "./StyledButton";
+import { GlobalAlertContext } from "../Contexts/GlobalAlertContext";
+import { BACKGROUND } from "../assets/theme";
 
 export default function Menu() {
   const navigation = useNavigation();
   const { cameraStarted, setCameraStarted } = useContext(CameraContext);
+  const { setAlertOpen, setAlertColor, setAlertText } = useContext(GlobalAlertContext);
 
   const handleStartCamera = async () => {
     const status = await Camera.requestCameraPermissionsAsync();
@@ -25,7 +28,9 @@ export default function Menu() {
       navigation.navigate("Scan");
       setCameraStarted(true);
     } else {
-      Alert.alert("Camera access denied");
+      setAlertColor("error");
+      setAlertText("Kameros prieiga atmesta!")
+      setAlertOpen(true);
     }
   };
 
@@ -93,7 +98,7 @@ export default function Menu() {
   return (
     <View style={styles.parent}>
       <ImageBackground
-        source={require("frontend/assets/background_quiz-01.png")}
+        source={BACKGROUND}
         style={styles.image}
       >
         <View style={styles.imageBlock}>

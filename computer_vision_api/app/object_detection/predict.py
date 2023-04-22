@@ -15,6 +15,7 @@ def predict_on_image(yolo_session, efficientnet_engine, image):
         })
 
     bboxes = bboxes[:, :, 0:5][0].tolist()
+    bboxes = expand_bboxes(bboxes)
     classes = predict_classes(efficientnet_engine, bboxes, image)
 
     return json.dumps({
@@ -184,3 +185,14 @@ def nms_cpu(boxes, confs, nms_thresh=0.5, min_mode=False):
         order = order[inds + 1]
 
     return np.array(keep)
+
+
+def expand_bboxes(bboxes, expand_by=60):
+    updated_bboxes = []
+    for bbox in bboxes:
+        bbox[0] -= expand_by
+        bbox[1] -= expand_by
+        bbox[2] += expand_by
+        bbox[3] += expand_by
+        updated_bboxes.append(bbox)
+    return updated_bboxes
