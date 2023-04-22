@@ -1,6 +1,53 @@
 import cv2
 import numpy as np
 import time
+import json
+
+
+def predict_on_image(yolo_session, efficientnet_engine, image):
+    bboxes = predict_bboxes(yolo_session, image)
+
+    # no detections
+    if bboxes.shape[1] == 0:
+        return json.dumps({
+            "bboxes": [],
+            "classes": []
+        })
+
+    bboxes = bboxes[:, :, 0:5][0].tolist()
+    classes = predict_classes(efficientnet_engine, bboxes, image)
+
+    return json.dumps({
+        "bboxes": bboxes,
+        "classes": classes
+    })
+
+
+def predict_classes(session, bboxes, image):
+    input_name = session.get_inputs()[0].name
+    predicted_classes = []
+    for bbox in bboxes:
+        bbox_data = [int(coord) for coord in bbox]
+        xmin, ymin, xmax, ymax, _ = bbox_data
+        frame_cut = image[ymin:ymax, xmin:xmax]
+
+        IN_IMAGE_H = session.get_inputs()[0].shape[2]
+        IN_IMAGE_W = session.get_inputs()[0].shape[3]
+
+        resized = cv2.resize(frame_cut, (IN_IMAGE_W, IN_IMAGE_H), interpolation=cv2.INTER_LINEAR)
+        img_in = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
+        img_in = np.transpose(img_in, (2, 0, 1)).astype(np.float32)
+        img_in = np.expand_dims(img_in, axis=0)
+        # img_in /= 255.0
+        print("Shape of the network input: ", img_in.shape)
+
+        outputs = session.run(None, {input_name: img_in})[0]
+        top_5_indices = np.argsort(-outputs[0])[0:5]
+        predicted_classes.append({
+            "class_ids": top_5_indices.tolist(),
+            "scores": outputs[0, top_5_indices].tolist()
+        })
+    return predicted_classes
 
 
 def predict_bboxes(session, image_src):
@@ -99,7 +146,7 @@ def post_processing(original_image_shape, conf_thresh, nms_thresh, output):
     print('Post processing total : %f' % (t3 - t1))
     print('-----------------------------------')
 
-    return bboxes_batch
+    return np.array(bboxes_batch)
 
 
 def nms_cpu(boxes, confs, nms_thresh=0.5, min_mode=False):

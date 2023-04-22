@@ -15,5 +15,3 @@ export const axiosInstanceScanner = axios.create({
         "Content-Type": "application/json",
     },
 });
-
-//sdasdas

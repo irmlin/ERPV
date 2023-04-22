@@ -38,8 +38,8 @@ export default function App() {
               },
             }}
           >
-            <Stack.Screen name="Login" component={LoginPage} />
-            <Stack.Screen name="Register" component={RegisterPage} />
+            {/* <Stack.Screen name="Login" component={LoginPage} /> */}
+            {/* <Stack.Screen name="Register" component={RegisterPage} /> */}
             <Stack.Screen name="Home" component={HomePage} options={{ headerBackVisible: false }} />
             <Stack.Screen name="Profile" component={ProfilePage} />
             <Stack.Screen name="Avatar" component={AvatarPage} />

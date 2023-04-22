@@ -12,12 +12,15 @@ services:
       - db:/var/lib/postgresql/data
 
   computer_vision:
-    build: ../computer_vision_api
+    container_name: computer_vision
+    build:
+      context: ../computer_vision_api
+      args:
+        - --no-cache
     volumes:
       - ../computer_vision_api/models:/code/models
     ports:
       - "8000:8000"
-
     entrypoint: uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 

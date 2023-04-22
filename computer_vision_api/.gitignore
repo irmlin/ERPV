@@ -1,3 +1,4 @@
 /.idea
-/__pycache__
-/models/yolov4.onnx
+**/*__pycache__*
+/models/*
+/app/testing.py

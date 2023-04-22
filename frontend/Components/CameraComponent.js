@@ -49,9 +49,9 @@ export default function CameraComponent() {
     if (response) {
       if (response.status === 200) {
         const predictionData = JSON.parse(response.data);
-        
+        console.log(predictionData["classes"][0]["class_ids"])
         if (predictionData["bboxes"].length) {
-          console.log("Received", predictionData["bboxes"][0].length, "predictions");
+          console.log("Received", predictionData["bboxes"].length, "predictions");
         } else {
           setAlertColor("error");
           setAlertText("Rūšiavimo ženkliukų neaptikta!");
@@ -60,8 +60,7 @@ export default function CameraComponent() {
         }
         
         const processedBboxes = [];
-        predictionData["bboxes"].map(image => {
-          image.map(bboxData => {
+        predictionData["bboxes"].map(bboxData => {
             let [x1, y1] = bboxData.slice(0, 2);
             let [x2, y2] = bboxData.slice(2, 4);
             let boxWidth = x2 - x1;
@@ -69,10 +68,9 @@ export default function CameraComponent() {
             let confidence = bboxData[4];
             processedBboxes.push([x1, y1, boxWidth, boxHeight, confidence])
           })
-        })
         setBoxes(processedBboxes);
       } else {
-        console.log("Bad request while processing image");
+        console.log("Bad request while processing image, refer to computer_vision api logs");
       }
     } else {
       console.log("Server error occured while processing image");
