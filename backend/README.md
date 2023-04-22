@@ -4,4 +4,7 @@
 * Create a postgresql docker container, this also creates python API container and runs it `docker-compose up -d`
 * `./mvnw clean flyway:migrate -D"flyway.configFiles"="flywayConfig.conf"` to run migrations
 * Run the application
-* When you're done, remove the containers `docker-compose down`
+* When you're done, remove the containers `docker-compose down` (better to remove, otherwise python API will be running in the background)
+
+If trying to run updated migrations, run `./mvnw flyway:clean -D"flyway.configFiles"="flywayConfig.conf"`
+to delete old migrations
