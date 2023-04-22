@@ -19,7 +19,12 @@ public class UserController {
     PasswordEncoder encoder;
 
     @PutMapping()
-    public ResponseEntity<?> logoutUser(HttpServletRequest request, @RequestBody UserDto user) {
+    public ResponseEntity<?> updateUser(HttpServletRequest request, @RequestBody UserDto user) {
         return userService.updateUser(request, user);
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> getUser(HttpServletRequest request) {
+        return userService.getUser(request);
     }
 }
