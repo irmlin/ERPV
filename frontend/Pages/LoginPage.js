@@ -158,13 +158,9 @@ export default function LoginPage() {
           buttonColor="#6DD8E7"
         ></StyledButton>
         <StyledButton
-          buttonText={"Pamiršai slaptažodį?"}
-          buttonColor="#FAC643"
-        ></StyledButton>
-        <StyledButton
           buttonText={"Registruotis"}
           onPressAction={handleRegistrationButtonClick}
-          buttonColor="#70D66E"
+          buttonColor="#FAC643"
         ></StyledButton>
       </View>
     </ImageBackground>
