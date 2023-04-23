@@ -33,19 +33,19 @@ public class User {
   @Size(max = 120)
   private String fullName;
 
-  private int totalAmountOfPoints;
-  private int currentPoints;
-  private int amountOfAvatars;
-  private int amountOfScannedPackages;
-  private int scannedPlastic;
-  private int scannedPaper;
-  private int scannedGlass;
-  private int scannedNonRecyclables;
-  private int amountOfQuestions;
-  private int amountOfTries;
-  private int correctAnswers;
-  private int amountOfVictories;
-  private int quizStreak;
+  private Integer totalAmountOfPoints;
+  private Integer currentPoints;
+  private Integer amountOfAvatars;
+  private Integer amountOfScannedPackages;
+  private Integer scannedPlastic;
+  private Integer scannedPaper;
+  private Integer scannedGlass;
+  private Integer scannedNonRecyclables;
+  private Integer amountOfQuestions;
+  private Integer amountOfTries;
+  private Integer correctAnswers;
+  private Integer amountOfVictories;
+  private Integer quizStreak;
 
   public User() {
   }
@@ -72,10 +72,6 @@ public class User {
     return email;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
   public String getPassword() {
     return password;
   }
@@ -92,107 +88,107 @@ public class User {
     this.fullName = fullName;
   }
 
-  public int getTotalAmountOfPoints() {
+  public Integer getTotalAmountOfPoints() {
     return totalAmountOfPoints;
   }
 
-  public void setTotalAmountOfPoints(int totalAmountOfPoints) {
+  public void setTotalAmountOfPoints(Integer totalAmountOfPoints) {
     this.totalAmountOfPoints = totalAmountOfPoints;
   }
 
-  public int getCurrentPoints() {
+  public Integer getCurrentPoints() {
     return currentPoints;
   }
 
-  public void setCurrentPoints(int currentPoints) {
+  public void setCurrentPoints(Integer currentPoints) {
     this.currentPoints = currentPoints;
   }
 
-  public int getAmountOfAvatars() {
+  public Integer getAmountOfAvatars() {
     return amountOfAvatars;
   }
 
-  public void setAmountOfAvatars(int amountOfAvatars) {
+  public void setAmountOfAvatars(Integer amountOfAvatars) {
     this.amountOfAvatars = amountOfAvatars;
   }
 
-  public int getAmountOfScannedPackages() {
+  public Integer getAmountOfScannedPackages() {
     return amountOfScannedPackages;
   }
 
-  public void setAmountOfScannedPackages(int amountOfScannedPackages) {
+  public void setAmountOfScannedPackages(Integer amountOfScannedPackages) {
     this.amountOfScannedPackages = amountOfScannedPackages;
   }
 
-  public int getScannedPlastic() {
+  public Integer getScannedPlastic() {
     return scannedPlastic;
   }
 
-  public void setScannedPlastic(int scannedPlastic) {
+  public void setScannedPlastic(Integer scannedPlastic) {
     this.scannedPlastic = scannedPlastic;
   }
 
-  public int getScannedPaper() {
+  public Integer getScannedPaper() {
     return scannedPaper;
   }
 
-  public void setScannedPaper(int scannedPaper) {
+  public void setScannedPaper(Integer scannedPaper) {
     this.scannedPaper = scannedPaper;
   }
 
-  public int getScannedGlass() {
+  public Integer getScannedGlass() {
     return scannedGlass;
   }
 
-  public void setScannedGlass(int scannedGlass) {
+  public void setScannedGlass(Integer scannedGlass) {
     this.scannedGlass = scannedGlass;
   }
 
-  public int getScannedNonRecyclables() {
+  public Integer getScannedNonRecyclables() {
     return scannedNonRecyclables;
   }
 
-  public void setScannedNonRecyclables(int scannedNonRecyclables) {
+  public void setScannedNonRecyclables(Integer scannedNonRecyclables) {
     this.scannedNonRecyclables = scannedNonRecyclables;
   }
 
-  public int getAmountOfQuestions() {
+  public Integer getAmountOfQuestions() {
     return amountOfQuestions;
   }
 
-  public void setAmountOfQuestions(int amountOfQuestions) {
+  public void setAmountOfQuestions(Integer amountOfQuestions) {
     this.amountOfQuestions = amountOfQuestions;
   }
 
-  public int getAmountOfTries() {
+  public Integer getAmountOfTries() {
     return amountOfTries;
   }
 
-  public void setAmountOfTries(int amountOfTries) {
+  public void setAmountOfTries(Integer amountOfTries) {
     this.amountOfTries = amountOfTries;
   }
 
-  public int getCorrectAnswers() {
+  public Integer getCorrectAnswers() {
     return correctAnswers;
   }
 
-  public void setCorrectAnswers(int correctAnswers) {
+  public void setCorrectAnswers(Integer correctAnswers) {
     this.correctAnswers = correctAnswers;
   }
 
-  public int getAmountOfVictories() {
+  public Integer getAmountOfVictories() {
     return amountOfVictories;
   }
 
-  public void setAmountOfVictories(int amountOfVictories) {
+  public void setAmountOfVictories(Integer amountOfVictories) {
     this.amountOfVictories = amountOfVictories;
   }
 
-  public int getQuizStreak() {
+  public Integer getQuizStreak() {
     return quizStreak;
   }
 
-  public void setQuizStreak(int quizStreak) {
+  public void setQuizStreak(Integer quizStreak) {
     this.quizStreak = quizStreak;
   }
 }

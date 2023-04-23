@@ -32,20 +32,20 @@ public class UserService {
 
         if (userData.isPresent()) {
             User _user = userData.get();
-            _user.setFullName(user.fullName());
-            _user.setTotalAmountOfPoints(user.totalAmountOfPoints());
-            _user.setCurrentPoints(user.currentPoints());
-            _user.setAmountOfAvatars(user.amountOfAvatars());
-            _user.setAmountOfScannedPackages(user.amountOfScannedPackages());
-            _user.setScannedPlastic(user.scannedPlastic());
-            _user.setScannedPaper(user.scannedPaper());
-            _user.setScannedGlass(user.scannedGlass());
-            _user.setScannedNonRecyclables(user.scannedNonRecyclables());
-            _user.setAmountOfQuestions(user.amountOfQuestions());
-            _user.setAmountOfTries(user.amountOfTries());
-            _user.setCorrectAnswers(user.correctAnswers());
-            _user.setAmountOfVictories(user.amountOfVictories());
-            _user.setQuizStreak(user.quizStreak());
+            Optional.ofNullable(user.fullName()).ifPresent(_user::setFullName);
+            Optional.ofNullable(user.totalAmountOfPoints()).ifPresent(_user::setTotalAmountOfPoints);
+            Optional.ofNullable(user.currentPoints()).ifPresent(_user::setCurrentPoints);
+            Optional.ofNullable(user.amountOfAvatars()).ifPresent(_user::setAmountOfAvatars);
+            Optional.ofNullable(user.amountOfScannedPackages()).ifPresent(_user::setAmountOfScannedPackages);
+            Optional.ofNullable(user.scannedPlastic()).ifPresent(_user::setScannedPlastic);
+            Optional.ofNullable(user.scannedPaper()).ifPresent(_user::setScannedPaper);
+            Optional.ofNullable(user.scannedGlass()).ifPresent(_user::setScannedGlass);
+            Optional.ofNullable(user.scannedNonRecyclables()).ifPresent(_user::setScannedNonRecyclables);
+            Optional.ofNullable(user.amountOfQuestions()).ifPresent(_user::setAmountOfQuestions);
+            Optional.ofNullable(user.amountOfTries()).ifPresent(_user::setAmountOfTries);
+            Optional.ofNullable(user.correctAnswers()).ifPresent(_user::setCorrectAnswers);
+            Optional.ofNullable(user.amountOfVictories()).ifPresent(_user::setAmountOfVictories);
+            Optional.ofNullable(user.quizStreak()).ifPresent(_user::setQuizStreak);
             return new ResponseEntity<>(userMapper.fromModelToDto(userRepository.save(_user)), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
