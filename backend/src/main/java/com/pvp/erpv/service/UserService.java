@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-
 @Service
 public class UserService {
     @Autowired
@@ -33,20 +32,20 @@ public class UserService {
 
         if (userData.isPresent()) {
             User _user = userData.get();
-            _user.setFullName(user.getFullName());
-            _user.setTotalAmountOfPoints(user.getTotalAmountOfPoints());
-            _user.setCurrentPoints(user.getCurrentPoints());
-            _user.setAmountOfAvatars(user.getAmountOfAvatars());
-            _user.setAmountOfScannedPackages(user.getAmountOfScannedPackages());
-            _user.setScannedPlastic(user.getScannedPlastic());
-            _user.setScannedPaper(user.getScannedPaper());
-            _user.setScannedGlass(user.getScannedGlass());
-            _user.setScannedNonRecyclables(user.getScannedNonRecyclables());
-            _user.setAmountOfQuestions(user.getAmountOfQuestions());
-            _user.setAmountOfTries(user.getAmountOfTries());
-            _user.setCorrectAnswers(user.getCorrectAnswers());
-            _user.setAmountOfVictories(user.getAmountOfVictories());
-            _user.setQuizStreak(user.getQuizStreak());
+            _user.setFullName(user.fullName());
+            _user.setTotalAmountOfPoints(user.totalAmountOfPoints());
+            _user.setCurrentPoints(user.currentPoints());
+            _user.setAmountOfAvatars(user.amountOfAvatars());
+            _user.setAmountOfScannedPackages(user.amountOfScannedPackages());
+            _user.setScannedPlastic(user.scannedPlastic());
+            _user.setScannedPaper(user.scannedPaper());
+            _user.setScannedGlass(user.scannedGlass());
+            _user.setScannedNonRecyclables(user.scannedNonRecyclables());
+            _user.setAmountOfQuestions(user.amountOfQuestions());
+            _user.setAmountOfTries(user.amountOfTries());
+            _user.setCorrectAnswers(user.correctAnswers());
+            _user.setAmountOfVictories(user.amountOfVictories());
+            _user.setQuizStreak(user.quizStreak());
             return new ResponseEntity<>(userMapper.fromModelToDto(userRepository.save(_user)), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
