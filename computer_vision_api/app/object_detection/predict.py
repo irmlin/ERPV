@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import time
 import json
+from albumentations.augmentations.transforms import Normalize
 
 
 def predict_on_image(yolo_session, efficientnet_engine, image):
@@ -36,10 +37,10 @@ def predict_classes(session, bboxes, image):
         IN_IMAGE_W = session.get_inputs()[0].shape[3]
 
         resized = cv2.resize(frame_cut, (IN_IMAGE_W, IN_IMAGE_H), interpolation=cv2.INTER_LINEAR)
-        img_in = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
+        img_in = Normalize().apply(resized)
+
         img_in = np.transpose(img_in, (2, 0, 1)).astype(np.float32)
         img_in = np.expand_dims(img_in, axis=0)
-        # img_in /= 255.0
         print("Shape of the network input: ", img_in.shape)
 
         outputs = session.run(None, {input_name: img_in})[0]
@@ -48,6 +49,7 @@ def predict_classes(session, bboxes, image):
             "class_ids": top_5_indices.tolist(),
             "scores": outputs[0, top_5_indices].tolist()
         })
+
     return predicted_classes
 
 

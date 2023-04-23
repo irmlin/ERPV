@@ -16,6 +16,7 @@ import CameraPreview from "./CameraPreview";
 import { scanPackage } from "../Services/ScannerService";
 import { GlobalAlertContext } from "../Contexts/GlobalAlertContext";
 import { BACKGROUND, SCAN_PAGE_DOG } from "../assets/theme";
+import { RECYCLING_GROUPS, SCANNER_STATES } from "../data/RecyclingCodesData";
 
 export default function CameraComponent() {
   const cameraRef = useRef(null);
@@ -29,6 +30,22 @@ export default function CameraComponent() {
   const [boxes, setBoxes] = useState([]);
   const [classes, setClasses] = useState([]);
   const [buttonEnabled, setButtonEnabled] = useState(true);
+  const [containerState, setContainerState] = useState({
+    visible: false,
+    toggle: false,
+    image: require("frontend/assets/icons/Plastikas-02.png"),
+  });
+  const [scannerState, setScannerState] = useState(SCANNER_STATES.IDLE);
+  const [lowerMessageState, setLowerMessageState] = useState({
+    color: SCANNER_STATES.IDLE.COLOR,
+    text: SCANNER_STATES.IDLE.TEXT,
+    visible: true,
+  });
+  const [upperMessageState, setUpperMessageState] = useState({
+    color: SCANNER_STATES.SUCCESS_YELLOW.COLOR,
+    text: SCANNER_STATES.SUCCESS_YELLOW.TEXT,
+    visible: false,
+  });
 
   const takePicture = async () => {
     if (!cameraRef.current) return;
@@ -44,6 +61,10 @@ export default function CameraComponent() {
     setTimeout(() => setPreviewVisible(true), 1);
     setCapturedImage(image);
     setButtonEnabled(false);
+    setLowerMessageState({
+      ...lowerMessageState,
+      visible: false,
+    });
 
     await detectSigns(image);
   };
@@ -54,22 +75,20 @@ export default function CameraComponent() {
     });
 
     const response = await scanPackage(base64Image);
-
     if (response) {
       if (response.status === 200) {
         const predictionData = JSON.parse(response.data);
-        console.log(predictionData["classes"][0]["class_ids"], predictionData["classes"]);
-        if (predictionData["bboxes"].length) {
-          console.log(
-            "Received",
-            predictionData["bboxes"].length,
-            "predictions"
-          );
-        } else {
-          setAlertColor("error");
-          setAlertText("Rūšiavimo ženkliukų neaptikta!");
-          setAlertOpen(true);
-          console.log("Received 0 predictions");
+
+        console.log("Received", predictionData["bboxes"].length, "predictions");
+
+        if (
+          !predictionData["bboxes"].length ||
+          RECYCLING_GROUPS.NONE.CLASSES.includes(
+            predictionData["classes"][0]["class_ids"][0]
+          )
+        ) {
+          activateErrorMessage();
+          return;
         }
 
         const processedBboxes = [];
@@ -84,10 +103,16 @@ export default function CameraComponent() {
 
         const predictedClasses = [];
         predictionData["classes"].map((classesData) => {
-          predictedClasses.push([classesData["class_ids"][0], classesData["scores"][0]])
-        })
+          predictedClasses.push([
+            classesData["class_ids"][0],
+            classesData["scores"][0],
+          ]);
+        });
 
-        setBoxes(processedBboxes);console.log(predictedClasses);
+        activateContainer(predictedClasses[0][0]);
+
+        setBoxes(processedBboxes);
+        console.log(predictedClasses);
         setClasses(predictedClasses);
       } else {
         console.log(
@@ -99,13 +124,87 @@ export default function CameraComponent() {
     }
   };
 
+  function activateErrorMessage() {
+    setLowerMessageState({
+      ...lowerMessageState,
+      visible: true,
+      color: SCANNER_STATES.ERROR.COLOR,
+      text: SCANNER_STATES.ERROR.TEXT,
+    });
+  }
+
+  function activateContainer(predictedClass) {
+    let newImage = containerState.image;
+    if (RECYCLING_GROUPS.YELLOW.CLASSES.includes(predictedClass)) {
+      newImage = require("frontend/assets/icons/Plastikas-02.png");
+      setUpperMessageState({
+        ...upperMessageState, 
+        visible: true,
+        text: SCANNER_STATES.SUCCESS_YELLOW.TEXT,
+        color: SCANNER_STATES.SUCCESS_YELLOW.COLOR
+      })
+    } else if (RECYCLING_GROUPS.GREEN.CLASSES.includes(predictedClass)) {
+      newImage = require("frontend/assets/icons/Stiklas-02.png");
+      setUpperMessageState({
+        ...upperMessageState, 
+        visible: true,
+        text: SCANNER_STATES.SUCCESS_GREEN.TEXT,
+        color: SCANNER_STATES.SUCCESS_GREEN.COLOR
+      })
+    } else if (RECYCLING_GROUPS.BLUE.CLASSES.includes(predictedClass)) {
+      newImage = require("frontend/assets/icons/Popierius-02.png");
+      setUpperMessageState({
+        ...upperMessageState, 
+        visible: true,
+        text: SCANNER_STATES.SUCCESS_BLUE.TEXT,
+        color: SCANNER_STATES.SUCCESS_BLUE.COLOR
+      })
+    } else {
+      return;
+    }
+
+    setContainerState({
+      image: newImage,
+      visible: true,
+      toggle: !containerState.toggle,
+    });
+  }
+
+  const hideContainer = () => {
+    setContainerState({
+      ...containerState,
+      toggle: !containerState.toggle,
+      visible: false,
+    });
+  };
+
+  const showLowerIdleMessage = () => {
+    setLowerMessageState({
+      ...lowerMessageState,
+      visible: true,
+      color: SCANNER_STATES.IDLE.COLOR,
+      text: SCANNER_STATES.IDLE.TEXT,
+    });
+  }
+
+  const hideUpperMessage = () => {
+    setUpperMessageState({
+      ...upperMessageState,
+      visible: false
+    });
+  }
+
   const savePhoto = () => {};
 
   const retakePhoto = () => {
     setCapturedImage(null);
     setPreviewVisible(false);
     setBoxes([]);
+    setClasses([]);
     setButtonEnabled(true);
+    hideContainer();
+    showLowerIdleMessage();
+    hideUpperMessage();
   };
 
   const handleFlashMode = () => {
@@ -131,12 +230,12 @@ export default function CameraComponent() {
       paddingHorizontal: "4%",
     },
     bottomImage: {
-      overflow: "visible",
+      // overflow: "visible",
       position: "absolute",
       left: "-65%",
-      top: "-22%",
-      width: 300,
-      height: 245,
+      top: "-8%",
+      width: 280,
+      height: 220,
     },
   });
 
@@ -161,6 +260,7 @@ export default function CameraComponent() {
                 boxes={boxes}
                 savePhoto={savePhoto}
                 retakePhoto={retakePhoto}
+                upperMessageState={upperMessageState}
               />
             ) : (
               <Camera
@@ -228,7 +328,7 @@ export default function CameraComponent() {
             style={{
               width: "33%",
               height: "100%",
-              overflow: "visible",
+              // overflow: "visible",
               position: "relative",
             }}
           >
@@ -251,30 +351,56 @@ export default function CameraComponent() {
                   width: 70,
                   height: 70,
                   borderRadius: 35,
+                  borderWidth: 4,
+                  borderColor: "white",
                   backgroundColor: buttonEnabled ? "#dc143c" : "#ff726f",
                   justifyContent: "center",
-                  alignItems: "center",
+                }}
+              />
+            </TouchableOpacity>
+            <View
+              style={{
+                width: 180,
+                height: 70,
+                borderRadius: 10,
+                borderWidth: 4,
+                marginTop: 15,
+                borderColor: "white",
+                backgroundColor: lowerMessageState.color,
+                justifyContent: "center",
+                alignItems: "center",
+                display: lowerMessageState.visible ? "flex" : "none",
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 17,
+                  fontWeight: "bold",
+                  width: "90%",
                 }}
               >
-                <View
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 20,
-                    borderWidth: 2,
-                    borderColor: "white",
-                    backgroundColor: "transparent",
-                  }}
-                />
-              </View>
-            </TouchableOpacity>
+                {lowerMessageState.text}
+              </Text>
+            </View>
           </View>
           <View
             style={{
               width: "33%",
               height: "100%",
+              // overflow: "visible",
+              position: "relative",
             }}
-          ></View>
+          >
+            <ImageBackground
+              source={containerState.image}
+              resizeMode={"contain"}
+              style={{
+                ...styles.bottomImage,
+                display: containerState.visible ? "flex" : "none",
+              }}
+            />
+          </View>
         </View>
         <StatusBar style="auto" />
       </ImageBackground>
