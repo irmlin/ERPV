@@ -19,6 +19,15 @@ export const login = async (username, password) => {
   }
 };
 
+export const logout = async () => {
+  try {
+    return await axiosInstance.post("/api/auth/logout");
+  } catch (err) {
+      console.error("Could not logout", err);
+      return err.response;
+  }
+};
+
 // EXAMPLE OF REQUEST WITH COOKIE (FOR AUTHENTICATED ENDPOINTS)
 export const testAuthenticatedEndpoint = async() => {
   try {
