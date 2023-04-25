@@ -13,7 +13,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { Camera } from "expo-camera";
 import { CameraContext } from "../Contexts/CameraContext";
-import StyledButton from "./StyledButton";
 
 export default function Menu() {
   const navigation = useNavigation();
