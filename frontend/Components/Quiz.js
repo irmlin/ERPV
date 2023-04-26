@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, StatusBar, Image, TouchableOpacity, Modal, Animated, StyleSheet, } from 'react-native';
 import data from '../data/QuizData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from "react-native";
+import { fetchQuestionsJSON } from '../data/DBQuizData';
 
 
 export default function Quiz()  {
 
     const navigation = useNavigation();
-    const allQuestions = data;
+    const [allQuestions, setQuestions] = useState([]);
+    useEffect(() => {
+        // Fetch the questions from the API
+        fetchQuestionsJSON()
+          .then(data => setQuestions(shuffleArray(data)))
+          .catch(error => console.error(error));
+      }, []);
+    
+      function shuffleArray(array) {
+        // Shuffle the array using a random comparison function
+        return array.sort(() => Math.random() - 0.5);
+      }
+      
+    //const allQuestions.onload = useState(fetchQuestionsJSON());
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
     const [correctOption, setCorrectOption] = useState(null);
@@ -19,7 +33,7 @@ export default function Quiz()  {
     const [showScoreModal, setShowScoreModal] = useState(false);
 
     const validateAnswer = (selectedOption) => {
-        let correct_option = allQuestions[currentQuestionIndex]['correct_option'];
+        let correct_option = allQuestions[currentQuestionIndex]['correctOption'];
         setCurrentOptionSelected(selectedOption);
         setCorrectOption(correct_option);
         setIsOptionsDisabled(true);
@@ -225,7 +239,6 @@ export default function Quiz()  {
             backgroundColor: "#add8e6",
             margin: 0,
            }}>
-
                {/* ProgressBar */}
                { renderProgressBar() }
 
