@@ -29,7 +29,7 @@ export default function Menu() {
   };
 
   const handleProfileButtonClick = () => {
-    navigation.navigate("Home");
+    navigation.navigate("Profile");
   };
 
   const handleAvatarButtonClick = () => {

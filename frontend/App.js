@@ -26,7 +26,7 @@ export default function App() {
       <GlobalAlertContextProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Login"
               component={LoginPage}
               options={{
@@ -41,7 +41,7 @@ export default function App() {
                 headerBackVisible: false,
                 headerShown: false,
               }}
-            />
+            /> */}
             <Stack.Screen
               name="Home"
               component={HomePage}

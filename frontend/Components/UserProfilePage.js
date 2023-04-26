@@ -110,7 +110,7 @@ export default function Profile() {
           style={styles.profilePic}
         />
         <View style={styles.userInfoContainer}>
-          <Text style={styles.username}>Vėžliukas aštunkojis</Text>
+          <Text style={styles.username}>Vėžliukas aštuonkojis</Text>
           <Text style={styles.points}>
             Turimi taškai: <Text style={{ fontWeight: "bold" }}>184t.</Text>
           </Text>
