@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-
 @Service
 public class UserService {
     @Autowired
@@ -33,20 +32,20 @@ public class UserService {
 
         if (userData.isPresent()) {
             User _user = userData.get();
-            _user.setFullName(user.getFullName());
-            _user.setTotalAmountOfPoints(user.getTotalAmountOfPoints());
-            _user.setCurrentPoints(user.getCurrentPoints());
-            _user.setAmountOfAvatars(user.getAmountOfAvatars());
-            _user.setAmountOfScannedPackages(user.getAmountOfScannedPackages());
-            _user.setScannedPlastic(user.getScannedPlastic());
-            _user.setScannedPaper(user.getScannedPaper());
-            _user.setScannedGlass(user.getScannedGlass());
-            _user.setScannedNonRecyclables(user.getScannedNonRecyclables());
-            _user.setAmountOfQuestions(user.getAmountOfQuestions());
-            _user.setAmountOfTries(user.getAmountOfTries());
-            _user.setCorrectAnswers(user.getCorrectAnswers());
-            _user.setAmountOfVictories(user.getAmountOfVictories());
-            _user.setQuizStreak(user.getQuizStreak());
+            Optional.ofNullable(user.fullName()).ifPresent(_user::setFullName);
+            Optional.ofNullable(user.totalAmountOfPoints()).ifPresent(_user::setTotalAmountOfPoints);
+            Optional.ofNullable(user.currentPoints()).ifPresent(_user::setCurrentPoints);
+            Optional.ofNullable(user.amountOfAvatars()).ifPresent(_user::setAmountOfAvatars);
+            Optional.ofNullable(user.amountOfScannedPackages()).ifPresent(_user::setAmountOfScannedPackages);
+            Optional.ofNullable(user.scannedPlastic()).ifPresent(_user::setScannedPlastic);
+            Optional.ofNullable(user.scannedPaper()).ifPresent(_user::setScannedPaper);
+            Optional.ofNullable(user.scannedGlass()).ifPresent(_user::setScannedGlass);
+            Optional.ofNullable(user.scannedNonRecyclables()).ifPresent(_user::setScannedNonRecyclables);
+            Optional.ofNullable(user.amountOfQuestions()).ifPresent(_user::setAmountOfQuestions);
+            Optional.ofNullable(user.amountOfTries()).ifPresent(_user::setAmountOfTries);
+            Optional.ofNullable(user.correctAnswers()).ifPresent(_user::setCorrectAnswers);
+            Optional.ofNullable(user.amountOfVictories()).ifPresent(_user::setAmountOfVictories);
+            Optional.ofNullable(user.quizStreak()).ifPresent(_user::setQuizStreak);
             return new ResponseEntity<>(userMapper.fromModelToDto(userRepository.save(_user)), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
