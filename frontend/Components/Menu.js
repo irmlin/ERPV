@@ -220,7 +220,7 @@ export default function Menu() {
 
         <View style={styles.imageBlock}>
           <Image
-            source={require("frontend/assets/Logo_baltas.png")}
+            source={require("frontend/assets/logo/Logo_baltas.png")}
             style={stylesb.image}
           ></Image>
         </View>
@@ -230,7 +230,7 @@ export default function Menu() {
           onPress={handleProfileButtonClick}
         >
           <Image
-            source={require("frontend/assets/profilio_ikona-01.png")}
+            source={require("frontend/assets/icons/profilio_ikona-01.png")}
             style={stylesb.buttonImageIconStyle}
           />
           <Text style={stylesb.text}>Profilis</Text>
@@ -242,7 +242,7 @@ export default function Menu() {
           onPress={handleAvatarButtonClick}
         >
           <Image
-            source={require("frontend/assets/avataru_ikona-01.png")}
+            source={require("frontend/assets/icons/avataru_ikona-01.png")}
             style={stylesb.buttonImageIconStyle}
           />
           <Text style={stylesb.text}>Avatarai</Text>
@@ -254,7 +254,7 @@ export default function Menu() {
           onPress={handleQuizButtonClick}
         >
           <Image
-            source={require("frontend/assets/klausimyno_ikona-01.png")}
+            source={require("frontend/assets/icons/klausimyno_ikona-01.png")}
             style={stylesb.buttonImageIconStyle}
           />
           <Text style={stylesb.text}>Klausimynas</Text>
@@ -266,7 +266,7 @@ export default function Menu() {
           onPress={handleStartCamera}
         >
           <Image
-            source={require("frontend/assets/skenavimo_ikona-01.png")}
+            source={require("frontend/assets/icons/skenavimo_ikona-01.png")}
             style={stylesb.buttonImageIconStyle}
           />
           <Text style={stylesb.text}>Skenavimas</Text>
@@ -278,7 +278,7 @@ export default function Menu() {
           onPress={handleCoursesButtonClick}
         >
           <Image
-            source={require("frontend/assets/laboratorijos_ikona.png")}
+            source={require("frontend/assets/icons/laboratorijos_ikona.png")}
             style={stylesb.buttonImageIconStyle}
           />
           <Text style={stylesb.text}>Mokslo kampelis</Text>

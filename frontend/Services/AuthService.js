@@ -28,6 +28,8 @@ export const logout = async () => {
   }
 };
 
+
+
 // EXAMPLE OF REQUEST WITH COOKIE (FOR AUTHENTICATED ENDPOINTS)
 export const testAuthenticatedEndpoint = async() => {
   try {
