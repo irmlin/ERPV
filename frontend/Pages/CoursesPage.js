@@ -5,8 +5,11 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import LessonBlockComponent from "../Components/LessonBlockComponent";
+import { LESSON_TYPES } from "../data/CoursesEnums";
+import { AWARDS } from "../data/AwardEnums";
 
-export default function GamePage({ navigation }) {
+export default function CoursesPage({ navigation }) {
   const { width, height } = Dimensions.get("window");
   const fontScale = Math.min(width, height) / 400;
 
@@ -35,6 +38,20 @@ export default function GamePage({ navigation }) {
     >
       <ScrollView>
         <Text style={styles.textBlock}>Visos pamokėlės</Text>
+        <LessonBlockComponent
+          title={"Kaip perdirbamas popierius?"}
+          durationInMinutes={5}
+          lessonType={LESSON_TYPES.READ}
+          award={AWARDS.RECYCLING_NERD}
+          thumbnailImage={require("frontend/assets/thumbnail-example.png")}
+        />
+        <LessonBlockComponent
+          title={"Kaip perdirbamas plastikas?"}
+          durationInMinutes={50}
+          lessonType={LESSON_TYPES.VIDEO}
+          award={AWARDS.RECYCLING_NEWBIE}
+          thumbnailImage={require("frontend/assets/thumbnail-example.png")}
+        />
       </ScrollView>
     </ImageBackground>
   );

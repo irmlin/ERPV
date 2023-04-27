@@ -33,10 +33,10 @@ export default function AvatarPage({navigation}) {
       </Swiper>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Unlock</Text>
+          <Text style={styles.buttonText}>Atrakinti</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Use</Text>
+          <Text style={styles.buttonText}>Naudoti</Text>
         </TouchableOpacity>
       </View>
     </View>
