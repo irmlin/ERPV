@@ -20,7 +20,8 @@ export default function Quiz()  {
     
       function shuffleArray(array) {
         // Shuffle the array using a random comparison function
-        return array.sort(() => Math.random() - 0.5);
+        return (array.sort(() => Math.random() - 0.5)).slice(0,7);
+
       }
       
     //const allQuestions.onload = useState(fetchQuestionsJSON());
@@ -241,7 +242,7 @@ export default function Quiz()  {
            }}>
                {/* ProgressBar */}
                { renderProgressBar() }
-
+                
                {/* Question */}
                {renderQuestion()}
 
@@ -313,22 +314,6 @@ export default function Quiz()  {
                        </View>
                    </View>
                </Modal>
-
-               {/* Background Image */}
-               {/*<Image
-                source={require('../assets/DottedBG.png')}
-                style={{
-                    width: 100,
-                    height: 200,
-                    zIndex: -1,
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    opacity: 0.5
-                }}
-                resizeMode={'contain'}
-                />*/}
 
            </View>
        </SafeAreaView>
