@@ -12,6 +12,7 @@ import AwardsPage from "./Pages/AwardsPage";
 import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegistrationPage";
 import { GlobalAlertContextProvider } from "./Contexts/GlobalAlertContext";
+import { BackgroundMusicContextProvider } from "./Contexts/BackgroundMusicContext";
 import Alert from "./Components/Alert";
 
 import { LogBox } from "react-native";
@@ -21,12 +22,14 @@ LogBox.ignoreAllLogs();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
   return (
     <CameraContextProvider>
       <GlobalAlertContextProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
+        <BackgroundMusicContextProvider>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
               name="Login"
               component={LoginPage}
               options={{
@@ -42,23 +45,24 @@ export default function App() {
                 headerShown: false,
               }}
             />
-            <Stack.Screen
-              name="Home"
-              component={HomePage}
-              options={{
-                headerBackVisible: false,
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen name="Profile" component={ProfilePage} />
-            <Stack.Screen name="Avatar" component={AvatarPage} />
-            <Stack.Screen name="Scan" component={ScanPage} />
-            <Stack.Screen name="Quiz" component={QuizPage} />
-            <Stack.Screen name="Courses" component={CoursesPage} />
-            <Stack.Screen name="Awards" component={AwardsPage} />
-          </Stack.Navigator>
-        </NavigationContainer>
-        <Alert duration={4000} />
+              <Stack.Screen
+                name="Home"
+                component={HomePage}
+                options={{
+                  headerBackVisible: false,
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen name="Profile" component={ProfilePage} />
+              <Stack.Screen name="Avatar" component={AvatarPage} />
+              <Stack.Screen name="Scan" component={ScanPage} />
+              <Stack.Screen name="Quiz" component={QuizPage} />
+              <Stack.Screen name="Courses" component={CoursesPage} />
+              <Stack.Screen name="Awards" component={AwardsPage} />
+            </Stack.Navigator>
+          </NavigationContainer>
+          <Alert duration={4000} />
+        </BackgroundMusicContextProvider>
       </GlobalAlertContextProvider>
     </CameraContextProvider>
   );

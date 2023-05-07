@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useContext} from "react";
 import {
   View,
   StyleSheet,
@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import RewardsBlock from "frontend/Components/RewardsBlock.js";
 
 export default function AwardsPage() {
+
   const { width, height } = Dimensions.get("window");
   const fontScale = Math.min(width, height) / 400;
 
