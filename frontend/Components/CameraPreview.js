@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useState, useEffect } from "react";
@@ -14,6 +15,7 @@ export default function CameraPreview({
   retakePhoto,
   savePhoto,
   upperMessageState,
+  loading,
 }) {
   const renderBoundingBox = () => {
     if (!photo.width || !photo.height || !boxes.length) {
@@ -61,7 +63,7 @@ export default function CameraPreview({
           style={{
             width: "100%",
             height: "18%",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <View
@@ -79,6 +81,12 @@ export default function CameraPreview({
               display: upperMessageState.visible ? "flex" : "none",
             }}
           >
+            <ActivityIndicator
+              size={90}
+              color="#00ff00"
+              animating={loading}
+              style={{ flex: 1 }}
+            />
             <Text
               style={{
                 textAlign: "center",

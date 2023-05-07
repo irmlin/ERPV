@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   ImageBackground,
   Image,
+  Animated,
 } from "react-native";
 import { Camera } from "expo-camera";
 import { CameraContext } from "../Contexts/CameraContext";
@@ -17,6 +18,7 @@ import { scanPackage } from "../Services/ScannerService";
 import { GlobalAlertContext } from "../Contexts/GlobalAlertContext";
 import { BACKGROUND, SCAN_PAGE_DOG } from "../assets/theme";
 import { RECYCLING_GROUPS, SCANNER_STATES } from "../data/RecyclingCodesData";
+import FadeView from "./FadeAnimation";
 
 export default function CameraComponent() {
   const cameraRef = useRef(null);
@@ -65,7 +67,7 @@ export default function CameraComponent() {
       ...lowerMessageState,
       visible: false,
     });
-
+    
     await detectSigns(image);
   };
 
@@ -74,7 +76,10 @@ export default function CameraComponent() {
       encoding: FileSystem.EncodingType.Base64,
     });
 
+    setLoading(true);
     const response = await scanPackage(base64Image);
+    setLoading(false);
+
     if (response) {
       if (response.status === 200) {
         const predictionData = JSON.parse(response.data);
@@ -138,28 +143,29 @@ export default function CameraComponent() {
     if (RECYCLING_GROUPS.YELLOW.CLASSES.includes(predictedClass)) {
       newImage = require("frontend/assets/icons/Plastikas-02.png");
       setUpperMessageState({
-        ...upperMessageState, 
+        ...upperMessageState,
         visible: true,
         text: SCANNER_STATES.SUCCESS_YELLOW.TEXT,
-        color: SCANNER_STATES.SUCCESS_YELLOW.COLOR
-      })
+        color: SCANNER_STATES.SUCCESS_YELLOW.COLOR,
+      });
     } else if (RECYCLING_GROUPS.GREEN.CLASSES.includes(predictedClass)) {
       newImage = require("frontend/assets/icons/Stiklas-02.png");
       setUpperMessageState({
-        ...upperMessageState, 
+        ...upperMessageState,
         visible: true,
         text: SCANNER_STATES.SUCCESS_GREEN.TEXT,
-        color: SCANNER_STATES.SUCCESS_GREEN.COLOR
-      })
+        color: SCANNER_STATES.SUCCESS_GREEN.COLOR,
+      });
     } else if (RECYCLING_GROUPS.BLUE.CLASSES.includes(predictedClass)) {
       newImage = require("frontend/assets/icons/Popierius-02.png");
       setUpperMessageState({
-        ...upperMessageState, 
+        ...upperMessageState,
         visible: true,
         text: SCANNER_STATES.SUCCESS_BLUE.TEXT,
-        color: SCANNER_STATES.SUCCESS_BLUE.COLOR
-      })
+        color: SCANNER_STATES.SUCCESS_BLUE.COLOR,
+      });
     } else {
+      activateErrorMessage();
       return;
     }
 
@@ -185,14 +191,14 @@ export default function CameraComponent() {
       color: SCANNER_STATES.IDLE.COLOR,
       text: SCANNER_STATES.IDLE.TEXT,
     });
-  }
+  };
 
   const hideUpperMessage = () => {
     setUpperMessageState({
       ...upperMessageState,
-      visible: false
+      visible: false,
     });
-  }
+  };
 
   const savePhoto = () => {};
 
@@ -261,6 +267,7 @@ export default function CameraComponent() {
                 savePhoto={savePhoto}
                 retakePhoto={retakePhoto}
                 upperMessageState={upperMessageState}
+                loading={loading}
               />
             ) : (
               <Camera
@@ -396,8 +403,8 @@ export default function CameraComponent() {
               source={containerState.image}
               resizeMode={"contain"}
               style={{
+                display: containerState.visible ? "flex": "none",
                 ...styles.bottomImage,
-                display: containerState.visible ? "flex" : "none",
               }}
             />
           </View>
