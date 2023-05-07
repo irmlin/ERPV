@@ -1,15 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useContext } from "react";
 import {
   View,
-  Button,
   Image,
   Alert,
   StyleSheet,
   Text,
-  TouchableOpacity,
   ImageBackground,
-  Modal, 
+  Modal,
   Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -19,6 +17,7 @@ import StyledButton from "./StyledButton";
 import { GlobalAlertContext } from "../Contexts/GlobalAlertContext";
 import { BACKGROUND } from "../assets/theme";
 import { logout } from "../Services/AuthService";
+import MenuButton  from "./MenuButton";
 
 export default function Menu() {
   const navigation = useNavigation();
@@ -53,15 +52,46 @@ export default function Menu() {
     navigation.navigate("Courses");
   };
 
+  const menuButtonsInfo = [
+    [
+      require("frontend/assets/icons/profilio_ikona-01.png"),
+      "Profilis",
+      "#FAC643",
+      handleProfileButtonClick
+    ],
+    [
+      require("frontend/assets/icons/avataru_ikona-01.png"),
+      "Avatarai",
+      "#70D66E",
+      handleAvatarButtonClick
+    ],
+    [
+      require("frontend/assets/icons/klausimyno_ikona-01.png"),
+      "Klausimynas",
+      "#6DD8E7",
+      handleQuizButtonClick
+    ],
+    [
+      require("frontend/assets/icons/skenavimo_ikona-01.png"),
+      "Skenavimas",
+      "#FAC643",
+      handleStartCamera
+    ],
+    [
+      require("frontend/assets/icons/laboratorijos_ikona.png"),
+      "Mokslo kampelis",
+      "#70D66E",
+      handleCoursesButtonClick
+    ]
+  ];
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleLogoutYesButtonClick = async () => {
-    
-    const response = await logout()
+    const response = await logout();
     if (response.status === 200) {
-      navigation.navigate("Login")
-      }
-    else if (response.status === 400) {
+      navigation.navigate("Login");
+    } else if (response.status === 400) {
       displayAlert("error", response.data.message);
     }
   };
@@ -77,34 +107,7 @@ export default function Menu() {
       flex: 1,
       justifyContent: "center",
     },
-  });
-
-  const stylesb = StyleSheet.create({
-    button: {
-      flexDirection: "row",
-      height: "8%",
-      width: "60%",
-      alignItems: "center",
-      marginTop: "5%",
-      marginLeft: "20%",
-      elevation: 10,
-      borderRadius: 15,
-      borderColor: "white",
-      borderWidth: 5,
-
-      justifyContent: "center",
-    },
-    text: {
-      fontSize: 27,
-      fontWeight: "bold",
-      color: "white",
-    },
-    buttonImageIconStyle: {
-      height: "70%",
-      width: "20%",
-      resizeMode: "contain",
-    },
-    image: {
+    logoImage: {
       width: 250,
       height: 250,
       alignSelf: "center",
@@ -114,15 +117,15 @@ export default function Menu() {
   const stylesLogout = StyleSheet.create({
     centeredView: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
     },
     modalView: {
-      backgroundColor: 'white',
+      backgroundColor: "white",
       borderRadius: 20,
       padding: "10%",
-      alignItems: 'center',
-      shadowColor: '#000',
+      alignItems: "center",
+      shadowColor: "#000",
       height: "25%",
       borderColor: "black",
       borderWidth: 5,
@@ -133,29 +136,28 @@ export default function Menu() {
       shadowOpacity: 0.5,
       shadowRadius: 4,
       elevation: 5,
-      
     },
     button: {
-      alignSelf: 'flex-end',
+      alignSelf: "flex-end",
       flexDirection: "row",
       height: "8%",
       width: "9%",
       marginEnd: "2%",
     },
     button2: {
-      alignSelf: 'flex-start',
+      alignSelf: "flex-start",
       marginTop: "5%",
       padding: 10,
       borderRadius: 10,
     },
     button3: {
-      alignSelf: 'flex-end',
+      alignSelf: "flex-end",
       marginTop: "5%",
       padding: 10,
       borderRadius: 10,
     },
     space: {
-      width: "20%", 
+      width: "20%",
       height: 20,
     },
     buttonImageIconStyle: {
@@ -164,19 +166,19 @@ export default function Menu() {
       resizeMode: "contain",
     },
     buttonOpen: {
-      backgroundColor: 'white',
+      backgroundColor: "white",
     },
     buttonClose: {
-      backgroundColor: '#6DD8E7',
+      backgroundColor: "#6DD8E7",
     },
     textStyle: {
-      color: 'white',
-      fontWeight: 'bold',
-      textAlign: 'center',
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center",
       fontSize: 17,
     },
     modalText: {
-      textAlign: 'center',
+      textAlign: "center",
       fontSize: 27,
     },
   });
@@ -187,108 +189,67 @@ export default function Menu() {
         source={BACKGROUND}
         style={styles.image}
       >
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={stylesLogout.centeredView}>
-          <View style={stylesLogout.modalView}>
-            <Text style={stylesLogout.modalText}>Ar norite atsijungti?</Text>
-            <View style={{flexDirection:"row"}} >
-            <Pressable
-              style={[stylesLogout.button2, stylesLogout.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={stylesLogout.textStyle}> Ne </Text>
-            </Pressable>
-            <View style={stylesLogout.space} />
-            <Pressable
-              style={[stylesLogout.button3, stylesLogout.buttonClose]}
-              onPress={handleLogoutYesButtonClick}>
-              <Text style={stylesLogout.textStyle}> Taip </Text>
-            </Pressable>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={stylesLogout.centeredView}>
+            <View style={stylesLogout.modalView}>
+              <Text style={stylesLogout.modalText}>Ar norite atsijungti?</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Pressable
+                  style={[stylesLogout.button2, stylesLogout.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={stylesLogout.textStyle}> Ne </Text>
+                </Pressable>
+                <View style={stylesLogout.space} />
+                <Pressable
+                  style={[stylesLogout.button3, stylesLogout.buttonClose]}
+                  onPress={handleLogoutYesButtonClick}
+                >
+                  <Text style={stylesLogout.textStyle}> Taip </Text>
+                </Pressable>
+              </View>
             </View>
           </View>
-        </View>
-      </Modal>
-      {/*Mygtukas meniu*/}
-      <Pressable
-        style={[stylesLogout.button]}
-        onPress={() => setModalVisible(true)}>
-        <Image
-          source={require("frontend/assets/icons/log-out.png")}
-          style={stylesLogout.buttonImageIconStyle}
-        />
-      </Pressable>
+        </Modal>
+        {/*Mygtukas meniu*/}
+
+        <Pressable
+          style={[stylesLogout.button]}
+          onPress={() => setModalVisible(true)}
+        >
+          <Image
+            source={require("frontend/assets/icons/log-out.png")}
+            style={stylesLogout.buttonImageIconStyle}
+          />
+        </Pressable>
 
         <View style={styles.imageBlock}>
           <Image
             source={require("frontend/assets/logo/Logo_baltas.png")}
-            style={stylesb.image}
+            style={styles.logoImage}
           ></Image>
         </View>
-        <TouchableOpacity
-          activeOpacity={0.95}
-          style={[stylesb.button, { backgroundColor: "#FAC643" }]}
-          onPress={handleProfileButtonClick}
-        >
-          <Image
-            source={require("frontend/assets/icons/profilio_ikona-01.png")}
-            style={stylesb.buttonImageIconStyle}
-          />
-          <Text style={stylesb.text}>Profilis</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          activeOpacity={0.95}
-          style={[stylesb.button, { backgroundColor: "#70D66E" }]}
-          onPress={handleAvatarButtonClick}
-        >
-          <Image
-            source={require("frontend/assets/icons/avataru_ikona-01.png")}
-            style={stylesb.buttonImageIconStyle}
-          />
-          <Text style={stylesb.text}>Avatarai</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          activeOpacity={0.95}
-          style={[stylesb.button, { backgroundColor: "#6DD8E7" }]}
-          onPress={handleQuizButtonClick}
-        >
-          <Image
-            source={require("frontend/assets/icons/klausimyno_ikona-01.png")}
-            style={stylesb.buttonImageIconStyle}
-          />
-          <Text style={stylesb.text}>Klausimynas</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          activeOpacity={0.95}
-          style={[stylesb.button, { backgroundColor: "#FAC643" }]}
-          onPress={handleStartCamera}
-        >
-          <Image
-            source={require("frontend/assets/icons/skenavimo_ikona-01.png")}
-            style={stylesb.buttonImageIconStyle}
-          />
-          <Text style={stylesb.text}>Skenavimas</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          activeOpacity={0.95}
-          style={[stylesb.button, { backgroundColor: "#70D66E" }]}
-          onPress={handleCoursesButtonClick}
-        >
-          <Image
-            source={require("frontend/assets/icons/laboratorijos_ikona.png")}
-            style={stylesb.buttonImageIconStyle}
-          />
-          <Text style={stylesb.text}>Mokslo kampelis</Text>
-        </TouchableOpacity>
+        <>
+        {
+          menuButtonsInfo.map((info, i) => (
+            <MenuButton
+              iconImage={info[0]}
+              text={info[1]}
+              backgroundColor={info[2]}
+              onClick={info[3]}
+              key={i}
+            />
+          ))
+        }
+        </>
       </ImageBackground>
     </View>
   );
