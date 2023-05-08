@@ -86,7 +86,7 @@ export default function Profile() {
       style={{ width: "100%", height: "100%" }}
     >
       <ScrollView>
-        <View style={[styles.rowContainer, { marginTop: 50 }]}>
+        <View style={[styles.rowContainer, { marginTop: height * 0.12 }]}>
           <SquareButton
             onPressAction={handleAvatarButtonClick}
             title={"Avatarai"}
