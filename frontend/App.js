@@ -19,6 +19,7 @@ import AwardsPage from "./Pages/AwardsPage";
 import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegistrationPage";
 import { GlobalAlertContextProvider } from "./Contexts/GlobalAlertContext";
+import { BackgroundMusicContextProvider } from "./Contexts/BackgroundMusicContext";
 import Alert from "./Components/Alert";
 
 import { LogBox } from "react-native";
@@ -43,9 +44,11 @@ function CloudNav() {
 }
 
 export default function App() {
+
   return (
     <CameraContextProvider>
       <GlobalAlertContextProvider>
+      <BackgroundMusicContextProvider>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -79,6 +82,7 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
         <Alert duration={4000} />
+        </BackgroundMusicContextProvider>
       </GlobalAlertContextProvider>
     </CameraContextProvider>
   );
