@@ -47,7 +47,6 @@ export default function CameraPreview({
   return (
     <View
       style={{
-        // flex: 1,
         width: "100%",
         height: "100%",
       }}
@@ -81,12 +80,6 @@ export default function CameraPreview({
               display: upperMessageState.visible ? "flex" : "none",
             }}
           >
-            <ActivityIndicator
-              size={90}
-              color="#00ff00"
-              animating={loading}
-              style={{ flex: 1 }}
-            />
             <Text
               style={{
                 textAlign: "center",
@@ -99,7 +92,6 @@ export default function CameraPreview({
             </Text>
           </View>
         </View>
-
         <View
           style={{
             flex: 1,

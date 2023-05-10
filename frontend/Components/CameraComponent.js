@@ -10,6 +10,7 @@ import {
   ImageBackground,
   Image,
   Animated,
+  Modal,
 } from "react-native";
 import { Camera } from "expo-camera";
 import { CameraContext } from "../Contexts/CameraContext";
@@ -19,6 +20,7 @@ import { GlobalAlertContext } from "../Contexts/GlobalAlertContext";
 import { BACKGROUND, SCAN_PAGE_DOG } from "../assets/theme";
 import { RECYCLING_GROUPS, SCANNER_STATES } from "../data/RecyclingCodesData";
 import FadeView from "./FadeAnimation";
+import Icon from "react-native-vector-icons/FontAwesome5";
 
 export default function CameraComponent() {
   const cameraRef = useRef(null);
@@ -32,6 +34,7 @@ export default function CameraComponent() {
   const [boxes, setBoxes] = useState([]);
   const [classes, setClasses] = useState([]);
   const [buttonEnabled, setButtonEnabled] = useState(true);
+  const [popupOpen, setPopUpOpen] = useState(false);
   const [containerState, setContainerState] = useState({
     visible: false,
     toggle: false,
@@ -48,6 +51,14 @@ export default function CameraComponent() {
     text: SCANNER_STATES.SUCCESS_YELLOW.TEXT,
     visible: false,
   });
+
+  const handleOpenPopup = () => {
+    setPopUpOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setPopUpOpen(false);
+  };
 
   const takePicture = async () => {
     if (!cameraRef.current) return;
@@ -67,7 +78,7 @@ export default function CameraComponent() {
       ...lowerMessageState,
       visible: false,
     });
-    
+
     await detectSigns(image);
   };
 
@@ -90,7 +101,8 @@ export default function CameraComponent() {
           !predictionData["bboxes"].length ||
           RECYCLING_GROUPS.NONE.CLASSES.includes(
             predictionData["classes"][0]["class_ids"][0]
-          )
+          ) ||
+          predictionData["classes"][0]["scores"][0] < 0.75
         ) {
           activateErrorMessage();
           return;
@@ -243,6 +255,10 @@ export default function CameraComponent() {
       width: 280,
       height: 220,
     },
+    info_button: {
+      justifyContent: "flex-end",
+      flexDirection: "row",
+    },
   });
 
   return (
@@ -260,6 +276,16 @@ export default function CameraComponent() {
               overflow: "hidden",
             }}
           >
+            <Modal
+              animationType="fade"
+              // transparent={true}
+              visible={popupOpen}
+              onRequestClose={handleClosePopup}
+            >
+              <View>
+                <Text>bitch</Text>
+              </View>
+            </Modal>
             {previewVisible && capturedImage ? (
               <CameraPreview
                 photo={capturedImage}
@@ -403,10 +429,17 @@ export default function CameraComponent() {
               source={containerState.image}
               resizeMode={"contain"}
               style={{
-                display: containerState.visible ? "flex": "none",
+                display: containerState.visible ? "flex" : "none",
                 ...styles.bottomImage,
               }}
             />
+            <TouchableOpacity
+              style={styles.info_button}
+              onPress={handleOpenPopup}
+            >
+              {/* <Icon source={require("./info-icon.png")} style={styles.info_button_icon} /> */}
+              <Icon size={30} color="black" name="info-circle" />
+            </TouchableOpacity>
           </View>
         </View>
         <StatusBar style="auto" />
