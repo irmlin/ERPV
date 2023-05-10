@@ -21,6 +21,7 @@ import { BACKGROUND, SCAN_PAGE_DOG } from "../assets/theme";
 import { RECYCLING_GROUPS, SCANNER_STATES } from "../data/RecyclingCodesData";
 import FadeView from "./FadeAnimation";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import ScannerGuidePopup from "./ScannerGuidePopup";
 
 export default function CameraComponent() {
   const cameraRef = useRef(null);
@@ -34,7 +35,7 @@ export default function CameraComponent() {
   const [boxes, setBoxes] = useState([]);
   const [classes, setClasses] = useState([]);
   const [buttonEnabled, setButtonEnabled] = useState(true);
-  const [popupOpen, setPopUpOpen] = useState(false);
+  const [popupOpen, setPopUpOpen] = useState(true);
   const [containerState, setContainerState] = useState({
     visible: false,
     toggle: false,
@@ -263,7 +264,8 @@ export default function CameraComponent() {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={BACKGROUND} style={styles.image}>
+      <ScannerGuidePopup open={popupOpen} onClose={handleClosePopup} />
+      <ImageBackground source={BACKGROUND} style={[styles.image, popupOpen && {opacity: 0.03}]}>
         {cameraStarted && (
           <View
             style={{
@@ -276,16 +278,6 @@ export default function CameraComponent() {
               overflow: "hidden",
             }}
           >
-            <Modal
-              animationType="fade"
-              // transparent={true}
-              visible={popupOpen}
-              onRequestClose={handleClosePopup}
-            >
-              <View>
-                <Text>bitch</Text>
-              </View>
-            </Modal>
             {previewVisible && capturedImage ? (
               <CameraPreview
                 photo={capturedImage}
