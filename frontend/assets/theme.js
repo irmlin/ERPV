@@ -20,3 +20,6 @@ export const SIZES = {
     width,
     height
 }
+
+export const BACKGROUND = require("frontend/assets/background_quiz-01.png")
+export const SCAN_PAGE_DOG = require("frontend/assets/avatars/Dog1-01.png")

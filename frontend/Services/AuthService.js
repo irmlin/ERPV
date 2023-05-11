@@ -1,4 +1,4 @@
-import axiosInstance from "../httpClient"
+import { axiosInstance } from "../httpClient"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const registerNewUser = async (username, email, password) => {

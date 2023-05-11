@@ -10,12 +10,12 @@ import { fetchQuestionsJSON } from '../data/DBQuizData';
 export default function Quiz()  {
 
     const navigation = useNavigation();
-    const [allQuestions, setQuestions] = useState([]);
+    const [allQuestions, setQuestions] = useState(data);
     useEffect(() => {
         // Fetch the questions from the API
-        fetchQuestionsJSON()
-          .then(data => setQuestions(shuffleArray(data)))
-          .catch(error => console.error(error));
+        // fetchQuestionsJSON()
+        //   .then(data => setQuestions(shuffleArray(data)))
+        //   .catch(error => console.error(error));
       }, []);
     
       function shuffleArray(array) {

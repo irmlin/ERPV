@@ -75,7 +75,7 @@ export default function App() {
             />
             <Stack.Screen name="Profile" component={ProfilePage} />
             <Stack.Screen name="Avatar" component={AvatarPage} />
-            <Stack.Screen name="Scan" component={ScanPage} />
+            <Stack.Screen name="Scan" component={ScanPage} options={{headerShown: false}}/>
             <Stack.Screen name="Quiz" component={QuizPage} />
             <Stack.Screen name="Courses" component={CoursesPage} />
             <Stack.Screen name="Awards" component={AwardsPage} />
