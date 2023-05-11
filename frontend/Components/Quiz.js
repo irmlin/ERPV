@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, StatusBar, Image, TouchableOpacity, Modal, Animated, StyleSheet, } from 'react-native';
-import data from '../data/QuizData';
+import { View, Text, SafeAreaView, TouchableOpacity, Modal, Animated } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from "@react-navigation/native";
-import { Dimensions } from "react-native";
 import { fetchQuestionsJSON } from '../data/DBQuizData';
 
 
@@ -13,16 +11,15 @@ export default function Quiz()  {
     const [allQuestions, setQuestions] = useState(data);
     useEffect(() => {
         // Fetch the questions from the API
-        // fetchQuestionsJSON()
-        //   .then(data => setQuestions(shuffleArray(data)))
-        //   .catch(error => console.error(error));
-      }, []);
+        fetchQuestionsJSON()
+          .then(data => setQuestions(shuffleArray(data)))
+          .catch(error => console.error(error));
+    }, []);
     
-      function shuffleArray(array) {
+    function shuffleArray(array) {
         // Shuffle the array using a random comparison function
         return (array.sort(() => Math.random() - 0.5)).slice(0,7);
-
-      }
+    }
       
     //const allQuestions.onload = useState(fetchQuestionsJSON());
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -112,7 +109,7 @@ export default function Quiz()  {
 
     
 
-    const [progress, setProgress] = useState(new Animated.Value(0));
+    const [progress] = useState(new Animated.Value(0));
     const progressAnim = progress.interpolate({
         inputRange: [0, allQuestions.length],
         outputRange: ['0%','100%']

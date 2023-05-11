@@ -1,6 +1,4 @@
 import axiosInstance from "../httpClient"
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 export const fetchQuestionsJSON = async () => {
     try {
