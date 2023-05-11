@@ -1,5 +1,6 @@
 package com.pvp.erpv.mapper;
 
+import com.pvp.erpv.dto.UserAvatarDto;
 import com.pvp.erpv.dto.UserDto;
 import com.pvp.erpv.models.User;
 import org.springframework.stereotype.Component;
@@ -23,5 +24,9 @@ public class UserMapper {
             user.getAmountOfVictories(),
             user.getQuizStreak()
         );
+    }
+
+    public UserAvatarDto fromModelToAvatarDto(User user) {
+        return new UserAvatarDto(user.getAvatars());
     }
 }

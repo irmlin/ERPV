@@ -64,4 +64,17 @@ public class UserService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    public ResponseEntity<?> getUserAvatars(HttpServletRequest request) {
+        String jwt = jwtUtils.getJwtFromCookies(request);
+        String username = jwtUtils.getUserNameFromJwtToken(jwt);
+
+        Optional<User> userData = userRepository.findByUsername(username);
+
+        if (userData.isPresent()) {
+            return new ResponseEntity<>(userMapper.fromModelToAvatarDto(userData.get()), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
