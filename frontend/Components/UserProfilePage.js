@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -12,8 +12,18 @@ import {
 import SquareButton from "frontend/Components/SquareButton.js";
 import UserStatistics from "frontend/Components/UserStatsTable.js";
 import { useNavigation } from "@react-navigation/native";
+import { fetchUserJSON } from '../data/DBUserData';
 
 export default function Profile() {
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+      // Fetch the user data from the API
+      fetchUserJSON()
+        .then(data => setUserData(data))
+        .catch(error => console.error(error));
+  }, []);
+
+
   const handleAvatarButtonClick = () => {
     navigation.navigate("Avatar");
   };
@@ -101,8 +111,8 @@ export default function Profile() {
           />
         </View>
         <Text style={styles.textBlock}>Statistika</Text>
-        <UserStatistics></UserStatistics>
-        <View style={{ height: height * 0.23 }}></View>
+        <UserStatistics />
+        <View style={{ height: height * 0.23 }}></View> 
       </ScrollView>
       <View style={styles.bottomContainer}>
         <Image
@@ -112,7 +122,7 @@ export default function Profile() {
         <View style={styles.userInfoContainer}>
           <Text style={styles.username}>Vėžliukas aštuonkojis</Text>
           <Text style={styles.points}>
-            Turimi taškai: <Text style={{ fontWeight: "bold" }}>184t.</Text>
+            Turimi taškai: <Text style={{ fontWeight: "bold" }}>{ userData['currentPoints'] }</Text>
           </Text>
         </View>
       </View>
