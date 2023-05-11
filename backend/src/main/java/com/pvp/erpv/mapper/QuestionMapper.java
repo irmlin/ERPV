@@ -17,7 +17,8 @@ public class QuestionMapper {
                         q.getQuestion(),
                         jsonStringToArray(q.getOptions()),
                         jsonStringToArray(q.getCorrectOption()),
-                        q.getExplanation());
+                        q.getExplanation(),
+                        q.getPictureName());
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
                 }

@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS questions (
     question TEXT NOT NULL,
     options TEXT ARRAY NOT NULL,
     correct_option TEXT ARRAY NOT NULL,
-    explanation TEXT NOT NULL
+    explanation TEXT NOT NULL,
+    picture_name TEXT
 );
 
 with questions_json (doc) as (
@@ -50,7 +51,8 @@ with questions_json (doc) as (
     "question": "Ką reiškia ant pakuočių dedamas „žaliojo taško” ženklas?",
     "options": ["Pakuotė yra daugkartinė","Pakuotė tinkama perdirbimui","Gamintojas yra sumokėjęs už tinkamą pažymėtos pakuotės tvarkymą"],
     "correct_option": ["Gamintojas yra sumokėjęs už tinkamą pažymėtos pakuotės tvarkymą"],
-    "explanation": "Žaliojo taško ženklas reiškia, kad pakuotės gamintojas rūpinasi aplinkos taršos mažinimu – yra sumokėjęs už tinkamą pažymėtos pakuotės tvarkymą."
+    "explanation": "Žaliojo taško ženklas reiškia, kad pakuotės gamintojas rūpinasi aplinkos taršos mažinimu – yra sumokėjęs už tinkamą pažymėtos pakuotės tvarkymą.",
+    "picture_name": "6.png"
   },
   {
     "id": 7,
@@ -106,14 +108,16 @@ with questions_json (doc) as (
     "question": "Ką reiškia šis ant pakuotės matomas ženklas?",
     "options": ["Pakuotė pagaminta iš perdirbtų atliekų","Pakuotė daugkartinio naudojimo","Pakuotė priklauso užstato sistemai (depozitas)","Pakuotė netinkama rūšiavimui"],
     "correct_option": ["Pakuotė priklauso užstato sistemai (depozitas)"],
-    "explanation": "Visos pakuotės, kurios yra paženklintos ekrane matomu ženklu, yra depozitinės. Šias pakuotes galima priduoti parduotuvėse įrengtuose taromatuose."
+    "explanation": "Visos pakuotės, kurios yra paženklintos ekrane matomu ženklu, yra depozitinės. Šias pakuotes galima priduoti parduotuvėse įrengtuose taromatuose.",
+    "picture_name": "14.png"
   },
   {
     "id": 15,
     "question": "Jeigu ant pakuotės yra pavaizduotas vienas iš šių ženklų, kaip reikėtų išmesti šią pakuotę?",
     "options": ["Pakuotę pateikti į specialųjį surinkimo punktą","Išmesti į stiklo konteinerį","Išmesti į  plastiko konteinerį","Išmesti į bendrųjų atliekų konteinerį"],
     "correct_option": ["Pakuotę pateikti į specialųjį surinkimo punktą"],
-    "explanation": "Visos pavojingos medžiagos privalo būti priduodamos specialiuose surinkimo punktuose, kad nebūtų sukelta žala gamtai bei gyvūnams."
+    "explanation": "Visos pavojingos medžiagos privalo būti priduodamos specialiuose surinkimo punktuose, kad nebūtų sukelta žala gamtai bei gyvūnams.",
+    "picture_name": "15.png"
   },
   {
     "id": 16,
@@ -127,7 +131,8 @@ with questions_json (doc) as (
     "question": "Ką reiškia šis ženklas?",
     "options": ["Šiukšlių konteineryje nebėra laisvos vietos","Pakuotę mesti tik į rūšiavimui skirtus konteinerius","Nemesti pakuotės į bendrą šiukšlių konteinerį"],
     "correct_option": ["Nemesti pakuotės į bendrą šiukšlių konteinerį"],
-    "explanation": "Šis simbolis nurodo, jog produktas turi savyje gamtai žalingų medžiagų, tad šias atliekas reikia pateikti į specialiuosius punktus, o ne mesti į bendrą konteinerį."
+    "explanation": "Šis simbolis nurodo, jog produktas turi savyje gamtai žalingų medžiagų, tad šias atliekas reikia pateikti į specialiuosius punktus, o ne mesti į bendrą konteinerį.",
+    "picture_name": "17.png"
   },
   {
     "id": 18,
@@ -160,7 +165,7 @@ with questions_json (doc) as (
 ]
 '::json)
 )
-insert into questions (id, question, options, correct_option, explanation)
+insert into questions (id, question, options, correct_option, explanation, picture_name)
 select p.*
 from questions_json l
     cross join lateral json_populate_recordset(null::questions, doc) as p
@@ -168,4 +173,5 @@ on conflict (id) do update
     set question = excluded.question,
         options = excluded.options,
         correct_option = excluded.correct_option,
-        explanation = excluded.explanation;
+        explanation = excluded.explanation,
+        picture_name = excluded.picture_name;

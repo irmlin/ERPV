@@ -17,6 +17,8 @@ public class Question {
 
     private String explanation;
 
+    private String pictureName;
+
     public Long getId() {
         return id;
     }
@@ -35,5 +37,9 @@ public class Question {
 
     public String getExplanation() {
         return explanation;
+    }
+
+    public String getPictureName() {
+        return pictureName;
     }
 }
