@@ -27,4 +27,9 @@ public class UserController {
     public ResponseEntity<?> getUser(HttpServletRequest request) {
         return userService.getUser(request);
     }
+
+    @GetMapping("/avatars")
+    public ResponseEntity<?> getUserAvatars(HttpServletRequest request) {
+        return userService.getUserAvatars(request);
+    }
 }

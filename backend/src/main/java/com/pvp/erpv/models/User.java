@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "users",
     uniqueConstraints = {
@@ -46,6 +48,13 @@ public class User {
   private Integer correctAnswers;
   private Integer amountOfVictories;
   private Integer quizStreak;
+
+  @ManyToMany
+  @JoinTable(
+          name = "user_avatar",
+          joinColumns = @JoinColumn(name = "user_id"),
+          inverseJoinColumns = @JoinColumn(name = "avatar_id"))
+  private Set<Avatar> avatars;
 
   public User() {
   }
@@ -190,5 +199,9 @@ public class User {
 
   public void setQuizStreak(Integer quizStreak) {
     this.quizStreak = quizStreak;
+  }
+
+  public Set<Avatar> getAvatars() {
+    return avatars;
   }
 }

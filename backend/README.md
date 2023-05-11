@@ -79,6 +79,23 @@ to delete old migrations
 }
 ```
 
+### `GET` `localhost:8080/api/user/avatars`
+
+#### Output
+
+```json
+{
+  "avatars": [
+    {
+      "id": 0,
+      "name": "foo",
+      "rarity": "common",
+      "pictureName": "foo.png"
+    }
+  ]
+}
+```
+
 ### `PUT` `localhost:8080/api/user`
 
 #### Input
@@ -128,7 +145,8 @@ to delete old migrations
     "correctOption": [
       "Geltonos (plastiko)"
     ],
-    "explanation": "Kartonines atliekas reikia mesti į plastikui skirtus geltonos spalvos konteinerius."
+    "explanation": "Kartonines atliekas reikia mesti į plastikui skirtus geltonos spalvos konteinerius.",
+    "pictureName": "question.png"
   },
   ...
 ]
