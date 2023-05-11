@@ -34,7 +34,7 @@ export default function StyledButton({
     <TouchableOpacity
       activeOpacity={0.8}
       style={styles.button}
-      onPress={onPressAction}
+      onPress={() => onPressAction()}
     >
       <Text style={styles.text}>{buttonText}</Text>
     </TouchableOpacity>
