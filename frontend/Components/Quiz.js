@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, Modal, Animated } from 'react-native';
+import { View, Text, SafeAreaView, StatusBar, Image, TouchableOpacity, Modal, Animated, StyleSheet, ImageBackground, Pressable, ScrollView } from 'react-native';
+import data from '../data/QuizData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from "@react-navigation/native";
+import { Dimensions } from "react-native";
 import { fetchQuestionsJSON } from '../data/DBQuizData';
 
 
@@ -14,12 +16,13 @@ export default function Quiz()  {
         fetchQuestionsJSON()
           .then(data => setQuestions(shuffleArray(data)))
           .catch(error => console.error(error));
-    }, []);
+      }, []);
     
-    function shuffleArray(array) {
+      function shuffleArray(array) {
         // Shuffle the array using a random comparison function
         return (array.sort(() => Math.random() - 0.5)).slice(0,7);
-    }
+
+      }
       
     //const allQuestions.onload = useState(fetchQuestionsJSON());
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -28,6 +31,7 @@ export default function Quiz()  {
     const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
     const [score, setScore] = useState(0);
     const [showNextButton, setShowNextButton] = useState(false);
+    const [showExplainModal, setShowExplainModal] = useState(false);
     const [showScoreModal, setShowScoreModal] = useState(false);
 
     const validateAnswer = (selectedOption) => {
@@ -40,6 +44,7 @@ export default function Quiz()  {
             setScore(score+1)
         }
         // Show Next Button
+        setShowExplainModal(true)
         setShowNextButton(true)
     };    
 
@@ -48,12 +53,14 @@ export default function Quiz()  {
             // Last Question
             // Show Score Modal
             setShowScoreModal(true)
+            setShowExplainModal(false)
         }else{
             setCurrentQuestionIndex(currentQuestionIndex+1);
             setCurrentOptionSelected(null);
             setCorrectOption(null);
             setIsOptionsDisabled(false);
             setShowNextButton(false);
+            setShowExplainModal(false);
         }
         Animated.timing(progress, {
             toValue: currentQuestionIndex+1,
@@ -83,25 +90,23 @@ export default function Quiz()  {
         navigation.navigate("Home");
     };
 
+    const toAvatarPage = () => {
+        navigation.navigate("Avatar");
+    };
+
     const renderQuestion = () => {
         return (
             <View style={{
-                marginVertical: "5%"
+                position: "absolute",
+                top: height * 0.15,
+                alignSelf: 'center',
             }}>
-                {/* Question Counter */}
-                <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'flex-end'
-                }}>
-                    <Text style={{color: '#000000', fontSize: 17, opacity: 0.6, fontWeight: '500', marginRight: 2}}>{currentQuestionIndex+1}</Text>
-                    <Text style={{color: '#000000', fontSize: 17, opacity: 0.6, fontWeight: '500'}}>/{allQuestions.length}</Text>
-                </View>
-
                 {/* Question */}
                 <Text style={{
                     color: '#000000',
-                    fontSize: 30,
-                    fontWeight: '400',
+                    fontSize: 25,
+                    fontWeight: '600',
+                    textAlign: 'center',
                 }}>{allQuestions[currentQuestionIndex]?.question}</Text>
             </View>
         )
@@ -109,7 +114,7 @@ export default function Quiz()  {
 
     
 
-    const [progress] = useState(new Animated.Value(0));
+    const [progress, setProgress] = useState(new Animated.Value(0));
     const progressAnim = progress.interpolate({
         inputRange: [0, allQuestions.length],
         outputRange: ['0%','100%']
@@ -125,56 +130,32 @@ export default function Quiz()  {
                         disabled={isOptionsDisabled}
                         key={option}
                         style={{
-                            borderWidth: 3, 
-                            borderColor: option==correctOption 
-                            ? '#00C851'
-                            : option==currentOptionSelected 
-                            ? '#ff4444' 
-                            : '#1E90FF' +'40',
+                            borderWidth: 4, 
+                            borderColor: option==currentOptionSelected 
+                            ? 'black'
+                            :  option==correctOption
+                            ? 'white' 
+                            : 'white' ,
                             backgroundColor: option==correctOption 
-                            ? '#3a9fbf' +'20'
+                            ? '#70D66E' 
                             : option==currentOptionSelected 
-                            ? '#ff4444' +'20'
-                            : '#1E90FF' +'20',
-                            height: 60, borderRadius: 20,
-                            flexDirection: 'row',
-                            
+                            ? '#FF7474' 
+                            : option!=correctOption && option!=currentOptionSelected
+                            ? '#FAC643' 
+                            : '#FF7474',
+                            height: height*0.08, 
+                            width: width*0.8,
+                            borderRadius: 20,
+                            bottom: height * -0.05,
                             alignItems: 'center', 
-                            justifyContent: 'space-between',
                             paddingHorizontal: "3%",
                             marginVertical: "3%",
+                            left:width*0.1,
                             
                         }}
                         >
-                            <Text style={{fontSize: 20, color: '#171717'}}>{option}</Text>
-
-                            {/* Show Check Or Cross Icon based on correct answer*/}
-                            {
-                                option==correctOption ? (
-                                    <View style={{
-                                        width: "10%", height: "60%", borderRadius: 30/2,
-                                        backgroundColor: '#00C851',
-                                        justifyContent: 'center', alignItems: 'center'
-                                    }}>
-                                        <MaterialCommunityIcons name="check" style={{
-                                            color: "#FFFFFF",
-                                            fontSize: 25
-                                        }} />
-                                    </View>
-                                ): option == currentOptionSelected ? (
-                                    <View style={{
-                                        width: "10%", height: "60%", borderRadius: 30/2,
-                                        backgroundColor: '#ff4444',
-                                        justifyContent: 'center', alignItems: 'center'
-                                    }}>
-                                        <MaterialCommunityIcons name="close" style={{
-                                            color: '#FFFFFF',
-                                            fontSize: 25
-                                        }} />
-                                    </View>
-                                ) : null
-                            }
-
+                            <Text style={{fontSize: 20, color: 'white', fontWeight: '700', textAlign: 'center'}}>{option}</Text>
+                            
                         </TouchableOpacity>
                     ))
                 }
@@ -182,19 +163,94 @@ export default function Quiz()  {
         )
     };
 
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const stylesExplanation = StyleSheet.create({
+        centeredView: {
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        },
+        modalView: {
+          left: '10%',
+          backgroundColor: '#fef5e7',
+          borderRadius: 20,
+          alignItems: "center",
+          shadowColor: "#000",
+          height: "50%",
+          width: "80%",
+          borderColor: "black",
+          borderWidth: 5,
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.5,
+          shadowRadius: 4,
+          elevation: 5,
+          position: 'absolute'
+        },
+        button: {
+          alignSelf: "flex-end",
+          flexDirection: "row",
+          height: "8%",
+          width: "9%",
+          marginEnd: "2%",
+        },
+        button2: {
+          alignSelf: "flex-start",
+          marginTop: "5%",
+          padding: 10,
+          borderRadius: 10,
+          backgroundColor: '#FF7474',
+        },
+        button3: {
+          alignSelf: "flex-end",
+          marginTop: "5%",
+          padding: 10,
+          borderRadius: 10,
+        },
+        space: {
+          width: "20%",
+          height: 20,
+        },
+        buttonImageIconStyle: {
+          height: "100%",
+          width: "100%",
+          resizeMode: "contain",
+        },
+        textStyle: {
+          color: "white",
+          fontWeight: "bold",
+          textAlign: "center",
+          fontSize: 17,
+        },
+        modalText: {
+          textAlign: "center",
+          fontSize: 27,
+        },
+      });
+
     const renderNextButton = () => {
         if(showNextButton){
             return (
-                <TouchableOpacity
-                activeOpacity={0.95}
-                onPress={handleNext}
-                style={{
-                     width: '100%',  height: 60, backgroundColor: '#3a9fbf', justifyContent: "center" , alignItems: "center", borderRadius: 17, 
-                     marginVertical: "3%",
-                }}>
-                    <Text style={{fontSize: 30,
-      fontWeight: '500',  }}>Kitas</Text>
-                </TouchableOpacity>
+                <ImageBackground
+                    source={require("frontend/assets/icons/Login_Debeselis1.png")}
+                    style={styles.inputBackground}
+                >
+                    <TouchableOpacity
+                        activeOpacity={0.95}
+                        onPress={handleNext}
+                    >
+                        <Text 
+                            style={{fontSize: 25,
+                            fontWeight: '500',  }}>
+                            Kitas klausimas
+                        </Text>
+                    </TouchableOpacity>
+                </ImageBackground>
+                
+                
             )
         }
         else{
@@ -202,19 +258,47 @@ export default function Quiz()  {
         }
     };
 
+  const renderExplanation = () => {
+    if (showExplainModal) {
+      return (
+        <View style={stylesExplanation.modalView}>
+          <ScrollView>
+            <Text style={stylesExplanation.modalText}>
+              {allQuestions[currentQuestionIndex]?.explanation}
+            </Text>
+          </ScrollView>
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <Pressable
+              style={stylesExplanation.button2}
+              onPress={() => setShowExplainModal(false)}
+            >
+              <Text style={stylesExplanation.textStyle}>Uždaryti</Text>
+            </Pressable>
+          </View>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+  
+
     const renderProgressBar = () => {
         return (
             <View style={{
-                width: '100%',
+                width: '60%',
                 height: 20,
-                borderRadius: 20,
-                backgroundColor: '#00000020',
+                borderRadius: 10,
+                backgroundColor: 'white',
+                left: width * 0.2,
+                position: "absolute",
+                top: height*0.05,
 
             }}>
                 <Animated.View style={[{
                     height: 20,
-                    borderRadius: 20,
-                    backgroundColor: '#3498db'
+                    borderRadius: 10,
+                    backgroundColor: '#70D66E'
                 },{
                     width: progressAnim
                 }]}>
@@ -225,18 +309,50 @@ export default function Quiz()  {
         )
     };
 
+    const { width, height } = Dimensions.get("window");
+    
+  const styles = StyleSheet.create({
+    image: {
+        flex: 1,
+      justifyContent: "center",
+    },
+    bottomContainer: {
+        flexDirection: "row",
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        alignItems: "center",
+    },
+      avatar: {
+        width: 0.35 * width,
+        height: 0.35 * width,
+      },
+      inputBackground: {
+        resizeMode: "contain",
+        width: width * 0.8,
+        height: height * 0.12,
+        bottom:0,
+        position: "absolute",
+        left: width * 0.1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      
+  });
+
     return(
         <SafeAreaView >
            <View style={{
-            flex: 0,
             width: "100%",
             height: "100%",
-            paddingVertical: "5%",
-            paddingHorizontal: "5%",
-            paddingBottom: "10%",
-            backgroundColor: "#add8e6",
             margin: 0,
            }}>
+            <ImageBackground
+           source={require("frontend/assets/background_quiz-01.png")}
+           style={styles.image}
+         >
+
                {/* ProgressBar */}
                { renderProgressBar() }
                 
@@ -249,71 +365,107 @@ export default function Quiz()  {
                {/* Next Button */}
                {renderNextButton()}
 
+               {/* Explanation */}
+               {renderExplanation()}
+
                {/* Score Modal */}
                <Modal
-               animationType="slide"
-               transparent={true}
-               visible={showScoreModal}
+                animationType="slide"
+                transparent={true}
+                visible={showScoreModal}
                >
+                <ImageBackground
+                    source={require("frontend/assets/background_quiz-01.png")}
+                    style={styles.image}
+                >
                     {/* Quiz end page background */}
                    <View style={{
                        flex: 1,
-                       backgroundColor: '#add8e6',
                        alignItems: 'center',
                        justifyContent: 'center'
                    }}>
                         {/* Quiz end page score window */}
                        <View style={{
-                           backgroundColor: '#EEF8FD',
+                           backgroundColor: '#fef5e7',
                            width: '80%',
                            borderRadius: 20,
                            padding: 10,
-                           alignItems: 'center'
+                           alignItems: 'center',                           
+                           borderColor: 'white', borderWidth: 5,
+                           top: -20,
                        }}>
-                           <Text style={{fontSize: 40, fontWeight: 'bold'}}>{ score> (allQuestions.length/2) ? 'Sveikinimai!' : 'O ne :(((' }</Text>
+                           <Text style={{
+                                fontSize: 30, color: '#171717', fontWeight: '700', textAlign: 'center'
+                                }}>{ score> (allQuestions.length/2) ? 'Sveikiname!' : 'O ne :(((' }
+                           </Text>
 
-                           <View style={{
-                               flexDirection: 'row',
-                               justifyContent: 'flex-start',
-                               alignItems: 'center',
-                               marginVertical: '15%'
-                           }}>
-                               <Text style={{
-                                   fontSize: 45,
-                                   color: score> (allQuestions.length/2) ? '#00C851' : '#ff4444'
-                               }}>{score}</Text>
-                                <Text style={{
-                                    fontSize: 40, color: '#171717'
-                                }}> / { allQuestions.length }</Text>
-                           </View>
-                           {/* Retry Quiz button */}
-                           <TouchableOpacity
-                           onPress={restartQuiz}
-                           style={{
-                               backgroundColor: '#107dac',
-                               padding: 20, width: '95%', borderRadius: 20, marginBottom: '2%'
-                           }}>
-                               <Text style={{
-                                   textAlign: 'center', color: '#F2F2FC', fontSize: 25, fontWeight: '500'
-                               }}>Pakartoti</Text>
-                           </TouchableOpacity>
+                            <Text style={{
+                                fontSize: 30, color: '#171717', fontWeight: '700', marginTop:'2%', textAlign: 'center'
+                                }}> Atsakei teisingai į {score} klausimus iš { allQuestions.length }.
+                            </Text>
+                                
+                           <Text style={{
+                                fontSize: 30, color: '#171717', fontWeight: '700', marginTop:'2%', textAlign: 'center', marginBottom: '2%'
+                                }}> Surinkai {score * 5} taškus!
+                            </Text>
+                       </View>
 
-                           <TouchableOpacity
+                       <TouchableOpacity
                            onPress={toHomePage}
                            style={{
-                               backgroundColor: '#107dac',
-                               padding: 30, width: '95%', borderRadius: 20, marginBottom: '2%'
+                               backgroundColor: '#6DD8E7',
+                               padding: 15, width: '80%', borderRadius: 20, 
+                               marginBottom: '2%', marginTop: '6%',
+                               borderColor: 'white', borderWidth: 5,
                            }}>
                                <Text style={{
-                                   textAlign: 'center', color: '#F2F2FC', fontSize: 25, fontWeight: '500'
-                               }}>Pagrindinis puslapis</Text>
+                                   textAlign: 'center', color: 'black', fontSize: 20, fontWeight: '700'
+                               }}>Grįžti į pagrindinį langą</Text>
                            </TouchableOpacity>
-                       </View>
-                   </View>
-               </Modal>
 
+                        <TouchableOpacity
+                           onPress={toAvatarPage}
+                           style={{
+                               backgroundColor: '#FAC643',
+                               padding: 15, width: '80%', borderRadius: 20, 
+                               marginBottom: '2%', marginTop: '2%',
+                               borderColor: 'white', borderWidth: 5,
+                           }}>
+                               <Text style={{
+                                   textAlign: 'center', color: 'black', fontSize: 20, fontWeight: '700'
+                               }}>Pirkti naują avatarą</Text>
+                        </TouchableOpacity>   
+
+                       {/* Retry Quiz button */}
+                       <TouchableOpacity
+                           onPress={restartQuiz}
+                           style={{
+                               backgroundColor: '#FF7474',
+                               padding: 15, width: '80%', borderRadius: 20, marginBottom: '2%',
+                               borderColor: 'white', borderWidth: 5,
+                               marginBottom: '2%', marginTop: '2%',
+                           }}>
+                               <Text style={{
+                                   textAlign: 'center', color: 'black', fontSize: 20, fontWeight: '700'
+                               }}>Bandyk iš naujo</Text>
+                        </TouchableOpacity>
+
+                        <View style={styles.bottomContainer}>
+          <Image
+            source={require("frontend/assets/avatars/Monkey1-01.png")}
+            style={styles.avatar}
+          />
+    
+        </View>
+                   </View>
+                   </ImageBackground>
+               </Modal>
+               </ImageBackground>
            </View>
        </SafeAreaView>
     )
 
 }
+
+
+
