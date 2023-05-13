@@ -8,7 +8,7 @@ import { fetchQuestionsJSON } from '../data/DBQuizData';
 export default function Quiz()  {
 
     const navigation = useNavigation();
-    const [allQuestions, setQuestions] = useState(data);
+    const [allQuestions, setQuestions] = useState([]);
     useEffect(() => {
         // Fetch the questions from the API
         fetchQuestionsJSON()
