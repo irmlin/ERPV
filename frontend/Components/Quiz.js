@@ -4,7 +4,7 @@ import data from '../data/QuizData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from "react-native";
-import { fetchQuestionsJSON } from '../data/DBQuizData';
+import { fetchQuestionsJSON, putQuestionData } from '../data/DBQuizData';
 
 
 export default function Quiz()  {
@@ -52,6 +52,7 @@ export default function Quiz()  {
         if(currentQuestionIndex== allQuestions.length-1){
             // Last Question
             // Show Score Modal
+            putQuestionData(score * 5, allQuestions.length, score)
             setShowScoreModal(true)
             setShowExplainModal(false)
         }else{
