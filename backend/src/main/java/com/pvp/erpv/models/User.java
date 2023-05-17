@@ -15,6 +15,27 @@ import java.util.Set;
     }
 )
 public class User {
+  public User(String username, String email, String password) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.fullName = "";
+    this.avatarId = 3L;
+    this.totalAmountOfPoints = 0;
+    this.currentPoints = 0;
+    this.amountOfAvatars = 0;
+    this.amountOfScannedPackages = 0;
+    this.scannedPlastic = 0;
+    this.scannedPaper = 0;
+    this.scannedGlass = 0;
+    this.scannedNonRecyclables = 0;
+    this.amountOfQuestions = 0;
+    this.amountOfTries = 0;
+    this.correctAnswers = 0;
+    this.amountOfVictories = 0;
+    this.quizStreak = 0;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -34,6 +55,8 @@ public class User {
 
   @Size(max = 120)
   private String fullName;
+
+  private Long avatarId;
 
   private Integer totalAmountOfPoints;
   private Integer currentPoints;
@@ -57,12 +80,6 @@ public class User {
   private Set<Avatar> avatars;
 
   public User() {
-  }
-
-  public User(String username, String email, String password) {
-    this.username = username;
-    this.email = email;
-    this.password = password;
   }
 
   public Long getId() {
@@ -203,5 +220,13 @@ public class User {
 
   public Set<Avatar> getAvatars() {
     return avatars;
+  }
+
+  public Long getAvatarId() {
+    return avatarId;
+  }
+
+  public void setAvatarId(Long avatarId) {
+    this.avatarId = avatarId;
   }
 }
