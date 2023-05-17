@@ -1,10 +1,12 @@
 package com.pvp.erpv.controllers;
 
 import com.pvp.erpv.models.User;
+import com.pvp.erpv.models.UserAvatar;
 import com.pvp.erpv.payload.request.LoginRequest;
 import com.pvp.erpv.payload.request.SignupRequest;
 import com.pvp.erpv.payload.response.MessageResponse;
 import com.pvp.erpv.payload.response.UserInfoResponse;
+import com.pvp.erpv.repository.UserAvatarRepository;
 import com.pvp.erpv.repository.UserRepository;
 import com.pvp.erpv.security.jwt.JwtUtils;
 import com.pvp.erpv.security.services.UserDetailsImpl;
@@ -33,6 +35,9 @@ public class AuthController {
 
   @Autowired
   UserRepository userRepository;
+
+  @Autowired
+  UserAvatarRepository userAvatarRepository;
 
   @Autowired
   PasswordEncoder encoder;
@@ -75,6 +80,10 @@ public class AuthController {
         encoder.encode(signUpRequest.getPassword()));
 
     userRepository.save(user);
+
+    UserAvatar userAvatar = new UserAvatar(user.getId(), user.getAvatarId());
+
+    userAvatarRepository.save(userAvatar);
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }

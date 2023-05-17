@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
     email TEXT NOT NULL,
     username TEXT NOT NULL,
     password TEXT NOT NULL,
-    avatar_id SERIAL,
+    avatar_id INTEGER DEFAULT 3,
     full_name TEXT,
     total_amount_of_points INTEGER DEFAULT 0,
     current_points INTEGER DEFAULT 0,

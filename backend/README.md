@@ -62,7 +62,8 @@ to delete old migrations
 
 ```json
 {
-  "fullName": null,
+  "fullName": "",
+  "avatarId": 3,
   "totalAmountOfPoints": 0,
   "currentPoints": 0,
   "amountOfAvatars": 0,
@@ -150,4 +151,35 @@ to delete old migrations
   },
   ...
 ]
+```
+
+## Avatars
+
+### `GET` `localhost:8080/api/avatars`
+
+#### Output
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Bear1",
+    "rarity": "rare",
+    "pictureName": "Bear1-01.png"
+  },
+  ...
+]
+```
+
+### `GET` `localhost:8080/api/avatars/{id}`
+
+#### Output
+
+```json
+{
+  "id": 1,
+  "name": "Bear1",
+  "rarity": "rare",
+  "pictureName": "Bear1-01.png"
+}
 ```

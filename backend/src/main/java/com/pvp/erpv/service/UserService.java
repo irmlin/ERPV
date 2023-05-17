@@ -3,6 +3,7 @@ package com.pvp.erpv.service;
 import com.pvp.erpv.dto.UserDto;
 import com.pvp.erpv.mapper.UserMapper;
 import com.pvp.erpv.models.User;
+import com.pvp.erpv.repository.AvatarRepository;
 import com.pvp.erpv.repository.UserRepository;
 import com.pvp.erpv.security.jwt.JwtUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +34,7 @@ public class UserService {
         if (userData.isPresent()) {
             User _user = userData.get();
             Optional.ofNullable(user.fullName()).ifPresent(_user::setFullName);
+            Optional.ofNullable(user.avatarId()).ifPresent(_user::setAvatarId);
             Optional.ofNullable(user.totalAmountOfPoints()).ifPresent(_user::setTotalAmountOfPoints);
             Optional.ofNullable(user.currentPoints()).ifPresent(_user::setCurrentPoints);
             Optional.ofNullable(user.amountOfAvatars()).ifPresent(_user::setAmountOfAvatars);
@@ -60,9 +62,8 @@ public class UserService {
 
         if (userData.isPresent()) {
             return new ResponseEntity<>(userMapper.fromModelToDto(userData.get()), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     public ResponseEntity<?> getUserAvatars(HttpServletRequest request) {
