@@ -99,13 +99,9 @@ export default function CameraComponent() {
         console.log("Received", predictionData["bboxes"].length, "predictions");
 
         if (
-          !predictionData["bboxes"].length ||
-          RECYCLING_GROUPS.NONE.CLASSES.includes(
-            predictionData["classes"][0]["class_ids"][0]
-          ) ||
-          predictionData["classes"][0]["scores"][0] < 0.75
+          !predictionData["bboxes"].length
         ) {
-          activateErrorMessage();
+          // activateErrorMessage();
           return;
         }
 
@@ -127,7 +123,7 @@ export default function CameraComponent() {
           ]);
         });
 
-        activateContainer(predictedClasses[0][0]);
+        // activateContainer(predictedClasses[0][0]);
 
         setBoxes(processedBboxes);
         console.log(predictedClasses);
@@ -264,9 +260,9 @@ export default function CameraComponent() {
 
   return (
     <View style={styles.container}>
-      <ScannerGuidePopup open={popupOpen} onClose={handleClosePopup} />
-      <ImageBackground source={BACKGROUND} style={[styles.image, popupOpen && {opacity: 0.03}]}>
-        {cameraStarted && (
+      {/* <ScannerGuidePopup open={popupOpen} onClose={handleClosePopup} /> */}
+      <ImageBackground source={require('frontend/assets/black.jpg')} style={styles.image}>
+        {true && (
           <View
             style={{
               width: "100%",
@@ -282,6 +278,7 @@ export default function CameraComponent() {
               <CameraPreview
                 photo={capturedImage}
                 boxes={boxes}
+                classes={classes}
                 savePhoto={savePhoto}
                 retakePhoto={retakePhoto}
                 upperMessageState={upperMessageState}
@@ -310,7 +307,7 @@ export default function CameraComponent() {
                       justifyContent: "space-between",
                     }}
                   >
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                       onPress={handleFlashMode}
                       style={{
                         backgroundColor: flashMode === "off" ? "#000" : "#fff",
@@ -326,7 +323,7 @@ export default function CameraComponent() {
                       >
                         ⚡️
                       </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </View>
                   <ActivityIndicator
                     size={90}
@@ -355,6 +352,7 @@ export default function CameraComponent() {
               height: "100%",
               // overflow: "visible",
               position: "relative",
+              opacity: 0
             }}
           >
             <ImageBackground
@@ -383,7 +381,7 @@ export default function CameraComponent() {
                 }}
               />
             </TouchableOpacity>
-            <View
+            {/* <View
               style={{
                 width: 180,
                 height: 70,
@@ -407,7 +405,7 @@ export default function CameraComponent() {
               >
                 {lowerMessageState.text}
               </Text>
-            </View>
+            </View> */}
           </View>
           <View
             style={{
@@ -417,21 +415,21 @@ export default function CameraComponent() {
               position: "relative",
             }}
           >
-            <ImageBackground
+            {/* <ImageBackground
               source={containerState.image}
               resizeMode={"contain"}
               style={{
                 display: containerState.visible ? "flex" : "none",
                 ...styles.bottomImage,
               }}
-            />
-            <TouchableOpacity
+            /> */}
+            {/* <TouchableOpacity
               style={styles.info_button}
               onPress={handleOpenPopup}
             >
-              {/* <Icon source={require("./info-icon.png")} style={styles.info_button_icon} /> */}
+              <Icon source={require("./info-icon.png")} style={styles.info_button_icon} />
               <Icon size={30} color="black" name="info-circle" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
         <StatusBar style="auto" />

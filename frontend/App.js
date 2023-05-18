@@ -52,11 +52,11 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
-              header: () => <CloudNav />,
-              headerShown: true,
+              // header: () => <CloudNav />,
+              // headerShown: true,
             }}
           >
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Login"
               component={LoginPage}
               options={{
@@ -74,11 +74,11 @@ export default function App() {
               }}
             />
             <Stack.Screen name="Profile" component={ProfilePage} />
-            <Stack.Screen name="Avatar" component={AvatarPage} />
+            <Stack.Screen name="Avatar" component={AvatarPage} /> */}
             <Stack.Screen name="Scan" component={ScanPage} options={{headerShown: false}}/>
-            <Stack.Screen name="Quiz" component={QuizPage} />
+            {/* <Stack.Screen name="Quiz" component={QuizPage} />
             <Stack.Screen name="Courses" component={CoursesPage} />
-            <Stack.Screen name="Awards" component={AwardsPage} />
+            <Stack.Screen name="Awards" component={AwardsPage} /> */}
           </Stack.Navigator>
         </NavigationContainer>
         <Alert duration={4000} />
