@@ -23,6 +23,7 @@ import { BackgroundMusicContextProvider } from "./Contexts/BackgroundMusicContex
 import Alert from "./Components/Alert";
 
 import { LogBox } from "react-native";
+import LootboxPage from "./Pages/LootboxPage";
 LogBox.ignoreLogs(["Warning: ..."]);
 LogBox.ignoreAllLogs();
 
@@ -56,7 +57,7 @@ export default function App() {
               headerShown: true,
             }}
           >
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Login"
               component={LoginPage}
               options={{
@@ -64,7 +65,7 @@ export default function App() {
                 headerShown: false,
               }}
             />
-            <Stack.Screen name="Register" component={RegisterPage} />
+            <Stack.Screen name="Register" component={RegisterPage} /> */}
             <Stack.Screen
               name="Home"
               component={HomePage}
@@ -79,6 +80,7 @@ export default function App() {
             <Stack.Screen name="Quiz" component={QuizPage} />
             <Stack.Screen name="Courses" component={CoursesPage} />
             <Stack.Screen name="Awards" component={AwardsPage} />
+            <Stack.Screen name="Lootbox" component={LootboxPage} />
           </Stack.Navigator>
         </NavigationContainer>
         <Alert duration={4000} />
