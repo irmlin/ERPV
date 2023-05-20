@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useState, useEffect } from "react";
-import { CLASSIFICATION_CODES_MAP} from "../data/RecyclingCodesData";
+import { CLASSIFICATION_CODES_MAP } from "../data/RecyclingCodesData";
 
 export default function CameraPreview({
   photo,
@@ -20,7 +20,8 @@ export default function CameraPreview({
   loading,
 }) {
   const renderBoundingBox = () => {
-    console.log(classes)
+    // if (classes.length)
+    //   console.log(classes[0][1])
     if (!photo.width || !photo.height || !boxes.length) {
       return null;
     }
@@ -40,10 +41,23 @@ export default function CameraPreview({
               borderColor: "red",
             }}
           >
-            {/* {
-              classes.length && (
-              <Text  style={{ color: 'red', textAlign: 'center', marginTop: -20, fontSize: 12 }}>{CLASSIFICATION_CODES_MAP[classes[i][0]]}: {classes[i][1].toFixed(2)}</Text> 
-            )} */}
+            <View style={{ minWidth: 60 }}>
+              <Text
+                style={{
+                  backgroundColor: "black",
+                  color: "red",
+                  textAlign: "center",
+                  marginTop: -20,
+                  fontSize: 12,
+                }}
+              >
+                {classes.length
+                  ? CLASSIFICATION_CODES_MAP[classes[i][0]] +
+                    ": " +
+                    classes[i][1].toFixed(2)
+                  : ""}
+              </Text>
+            </View>
           </View>
         ))}
       </>
