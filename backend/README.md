@@ -97,6 +97,16 @@ to delete old migrations
 }
 ```
 
+### `PUT` `localhost:8080/api/user/avatars`
+
+#### Input
+
+```json
+{
+  "id": 0
+}
+```
+
 ### `PUT` `localhost:8080/api/user`
 
 #### Input
