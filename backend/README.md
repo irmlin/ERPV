@@ -66,7 +66,7 @@ to delete old migrations
   "avatarId": 3,
   "totalAmountOfPoints": 0,
   "currentPoints": 0,
-  "amountOfAvatars": 0,
+  "amountOfAvatars": 1,
   "amountOfScannedPackages": 0,
   "scannedPlastic": 0,
   "scannedPaper": 0,

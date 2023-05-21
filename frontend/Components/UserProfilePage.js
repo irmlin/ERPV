@@ -13,16 +13,43 @@ import SquareButton from "frontend/Components/SquareButton.js";
 import UserStatistics from "frontend/Components/UserStatsTable.js";
 import { useNavigation } from "@react-navigation/native";
 import { fetchUserJSON } from '../data/DBUserData';
+import { fetchAvatarJSON } from '../data/AvatarData';
+import ImageImport from "../data/ImageImport";
 
 export default function Profile() {
   const [userData, setUserData] = useState([]);
+  const [avatarData, setAvatarData] = useState([]);
+  const [avatar, setAvatar] = useState(null);
+
   useEffect(() => {
-      // Fetch the user data from the API
-      fetchUserJSON()
-        .then(data => setUserData(data))
-        .catch(error => console.error(error));
+    fetchAvatarJSON()
+      .then(data => {
+        setAvatarData(data);
+        fetchUserJSON()
+          .then(userData => {
+            setUserData(userData);
+            getImage(userData, data);
+          })
+          .catch(error => console.error(error));
+      })
+      .catch(error => console.error(error));
   }, []);
 
+  const getImage = async (userData, avatarData) => {
+    const avatar = avatarData.find(item => item.id === userData.avatarId);
+    if (avatar) {
+      const pictureName = avatar.pictureName;
+      const imageName = pictureName.toLowerCase().split("-")[0];
+      const image = ImageImport[imageName];
+      if (image !== undefined) {
+        setAvatar(image);
+      } else {
+        console.warn(`Image not found for pictureName: ${pictureName}`);
+      }
+    } else {
+      console.warn(`Avatar not found for id: ${userData.avatarId}`);
+    }
+  };
 
   const handleAvatarButtonClick = () => {
     navigation.navigate("Avatar");
@@ -116,11 +143,11 @@ export default function Profile() {
       </ScrollView>
       <View style={styles.bottomContainer}>
         <Image
-          source={require("frontend/assets/avatars/Dog1-01.png")}
+          source={avatar}
           style={styles.profilePic}
         />
         <View style={styles.userInfoContainer}>
-          <Text style={styles.username}>Vėžliukas aštuonkojis</Text>
+          <Text style={styles.username}>{ userData['fullName'] }</Text>
           <Text style={styles.points}>
             Turimi taškai: <Text style={{ fontWeight: "bold" }}>{ userData['totalAmountOfPoints'] }</Text>
           </Text>

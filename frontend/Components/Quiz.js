@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 //import { resolveAssetSource } from 'react-native/Libraries/Image/resolveAssetSource';
-import { View, Text, SafeAreaView, StatusBar, Image, TouchableOpacity, Modal, Animated, StyleSheet, ImageBackground, Pressable, ScrollView } from 'react-native';
-import data from '../data/QuizData';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { View, Text, SafeAreaView, Image, TouchableOpacity, Modal, Animated, StyleSheet, ImageBackground, Pressable, ScrollView } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from "react-native";
 import { fetchQuestionsJSON, putQuestionData } from '../data/DBQuizData';
