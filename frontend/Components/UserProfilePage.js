@@ -122,7 +122,7 @@ export default function Profile() {
         <View style={styles.userInfoContainer}>
           <Text style={styles.username}>Vėžliukas aštuonkojis</Text>
           <Text style={styles.points}>
-            Turimi taškai: <Text style={{ fontWeight: "bold" }}>{ userData['currentPoints'] }</Text>
+            Turimi taškai: <Text style={{ fontWeight: "bold" }}>{ userData['totalAmountOfPoints'] }</Text>
           </Text>
         </View>
       </View>

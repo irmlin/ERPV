@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const addNewAvatarForUser = async(id) => {
   try {
     const cookie = await AsyncStorage.getItem('JWT_COOKIE');
-    return await axiosInstance.put("/api/user/avatars", id, 
+    return await axiosInstance.put("/api/user/avatars", {id}, 
      {
       withCredentials: true,
       headers: {
@@ -12,7 +12,7 @@ export const addNewAvatarForUser = async(id) => {
       }
     });
   } catch (err) {
-      console.error("An error occured while fetching all avatars", err);
+      console.error("An error occured while adding new avatar for user", err);
       return err.response;
   }
 }
