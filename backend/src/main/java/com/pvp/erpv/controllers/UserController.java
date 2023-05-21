@@ -1,5 +1,6 @@
 package com.pvp.erpv.controllers;
 
+import com.pvp.erpv.dto.AddUserAvatarDto;
 import com.pvp.erpv.dto.UserDto;
 import com.pvp.erpv.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,5 +32,10 @@ public class UserController {
     @GetMapping("/avatars")
     public ResponseEntity<?> getUserAvatars(HttpServletRequest request) {
         return userService.getUserAvatars(request);
+    }
+
+    @PutMapping("/avatars")
+    public ResponseEntity<?> addUserAvatar(HttpServletRequest request, @RequestBody AddUserAvatarDto addUserAvatarDto) {
+        return userService.addUserAvatar(request, addUserAvatarDto);
     }
 }

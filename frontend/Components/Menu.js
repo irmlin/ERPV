@@ -52,6 +52,10 @@ export default function Menu() {
     navigation.navigate("Courses");
   };
 
+  const handleLootboxButtonClick = () => {
+    navigation.navigate("Lootbox");
+  };
+
   const menuButtonsInfo = [
     [
       require("frontend/assets/icons/profilio_ikona-01.png"),
@@ -82,6 +86,12 @@ export default function Menu() {
       "Mokslo kampelis",
       "#70D66E",
       handleCoursesButtonClick
+    ],
+    [
+      require("frontend/assets/badge.png"),
+      "Lootbox'ai",
+      "#6DD8E7",
+      handleLootboxButtonClick
     ]
   ];
 
@@ -140,9 +150,11 @@ export default function Menu() {
     button: {
       alignSelf: "flex-end",
       flexDirection: "row",
-      height: "8%",
+      height: "5%",
       width: "9%",
-      marginEnd: "2%",
+      marginEnd: "10%",
+      position: "absolute",
+      top: "5%"
     },
     button2: {
       alignSelf: "flex-start",
