@@ -3,7 +3,6 @@ import { useContext } from "react";
 import {
   View,
   Image,
-  Alert,
   StyleSheet,
   Text,
   ImageBackground,
@@ -13,7 +12,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { Camera } from "expo-camera";
 import { CameraContext } from "../Contexts/CameraContext";
-import StyledButton from "./StyledButton";
 import { GlobalAlertContext } from "../Contexts/GlobalAlertContext";
 import { BACKGROUND } from "../assets/theme";
 import { logout } from "../Services/AuthService";

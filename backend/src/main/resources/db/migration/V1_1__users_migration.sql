@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     full_name TEXT,
     total_amount_of_points INTEGER DEFAULT 0,
     current_points INTEGER DEFAULT 0,
-    amount_of_avatars INTEGER DEFAULT 0,
+    amount_of_avatars INTEGER DEFAULT 1,
     amount_of_scanned_packages INTEGER DEFAULT 0,
     scanned_plastic INTEGER DEFAULT 0,
     scanned_paper INTEGER DEFAULT 0,

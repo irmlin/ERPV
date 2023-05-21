@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,18 +8,56 @@ import {
   ImageBackground,
 } from "react-native";
 import Swiper from "react-native-swiper";
+import { fetchUserJSON, fetchUserAvatarsJSON } from "../data/DBUserData";
+import { putUserAvatar } from "../data/DBUserData";
+import ImageImport from "../data/ImageImport";
 
-export default function AvatarPage({ navigation }) {
-  const images = [
-    require("../assets/1.png"),
-    require("../assets/2.png"),
-    require("../assets/3.png"),
-  ];
-
+export default function AvatarPage() {
+  const [userData, setUserData] = useState([]);
+  const [userAvatarData, setUserAvatarData] = useState([]);
+  const [images, setImages] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    fetchUserAvatarsJSON()
+      .then(data => {
+        setUserAvatarData(data);
+        getImages(data);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  const getImages = async (userData) => {
+    let img = [];
+    userData["avatars"].forEach(el => {
+      const pictureName = el["pictureName"];
+      const imageName = pictureName.toLowerCase().split("-")[0];
+      const image = {
+        picture: ImageImport[imageName],
+        id: el["id"]
+      };
+      if (image.picture !== undefined) {
+        img.push(image);
+      } else {
+        console.warn(`Image not found for pictureName: ${pictureName}`);
+      }
+    });
+    setImages(img);
+  };
 
   const onSwipeImageChange = (index) => {
     setCurrentImageIndex(index);
+  };
+
+  useEffect(() => {
+    fetchUserJSON()
+      .then(data => setUserData(data))
+      .catch(error => console.error(error));
+  }, []);
+
+  const updateAvatar = (avatarId) => {
+    putUserAvatar(avatarId);
+    setUserData(prevUserData => ({ ...prevUserData, avatarId }));
   };
 
   return (
@@ -28,29 +66,38 @@ export default function AvatarPage({ navigation }) {
       resizeMode="cover"
       style={{ width: "100%", height: "100%" }}
     >
-      <View style={styles.container}>
-        <Swiper
-          showsButtons={true}
-          loop={false}
-          index={currentImageIndex}
-          onIndexChanged={(index) => onSwipeImageChange(index)}
-          showsPagination={false}
-        >
-          {images.map((image, index) => (
-            <View key={index} style={styles.slide}>
-              <Image source={image} style={styles.image} />
-            </View>
-          ))}
-        </Swiper>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Atrakinti</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Naudoti</Text>
-          </TouchableOpacity>
+      {images ? (
+        <View style={styles.container}>
+          <Swiper
+            showsButtons={true}
+            loop={false}
+            index={currentImageIndex}
+            onIndexChanged={(index) => onSwipeImageChange(index)}
+            showsPagination={false}
+          >
+            {images.map((image, index) => (
+              <View key={index} style={styles.slide}>
+                <Image source={image.picture} style={styles.image} />
+                <View style={styles.buttonsContainer}>
+                  <TouchableOpacity
+                    style={
+                      userData["avatarId"] === image.id
+                        ? styles.unclickableButton
+                        : styles.button
+                    }
+                    onPress={() => updateAvatar(image.id)}
+                    disabled={userData["avatarId"] === image.id}
+                  >
+                    <Text style={styles.buttonText}>Naudoti</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
+          </Swiper>
         </View>
-      </View>
+      ) : (
+        <></>
+      )}
     </ImageBackground>
   );
 }
@@ -78,6 +125,16 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#6DD8E7",
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    marginHorizontal: 5,
+    marginVertical: 5,
+    alignItems: "center",
+    width: "50%",
+  },
+  unclickableButton: {
+    backgroundColor: "#808080",
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 10,

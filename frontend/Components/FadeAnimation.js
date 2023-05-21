@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { ImageBackground, Animated } from "react-native";
+import { useEffect, useRef } from "react";
+import { Animated } from "react-native";
 
 export default function FadeView (props) {
   // 0 - fade in animation, 1 - fade out
