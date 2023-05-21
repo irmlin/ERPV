@@ -50,10 +50,10 @@ export const getUser = async() => {
 }
 
 
-export const updateUserPoints = async(totalAmountOfPoints) => {
+export const updateUserPointsAndAvatarCount = async(totalAmountOfPoints, amountOfAvatars) => {
   try {
     const cookie = await AsyncStorage.getItem('JWT_COOKIE');
-    return await axiosInstance.put("/api/user", {totalAmountOfPoints},
+    return await axiosInstance.put("/api/user", {totalAmountOfPoints, amountOfAvatars},
      {
       withCredentials: true,
       headers: {

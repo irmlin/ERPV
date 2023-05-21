@@ -13,7 +13,7 @@ import {
   addNewAvatarForUser,
   getUser,
   getUserAvatars,
-  updateUserPoints,
+  updateUserPointsAndAvatarCount,
 } from "../Services/UserService";
 import Icon from "react-native-vector-icons/Ionicons";
 import { getAllAvatars } from "../Services/AvatarService";
@@ -165,6 +165,7 @@ export default function LootboxPage({ navigation }) {
     }
 
     const reducedPoints = userData["totalAmountOfPoints"] - avatarPrice;
+    const newAvatarCount = userData["amountOfAvatars"] + 1
     const randomAvatar = chooseRandomAvatar();
     if (!randomAvatar) {
       displayAlert("error", "Jau turi visus avatarus!");
@@ -172,7 +173,7 @@ export default function LootboxPage({ navigation }) {
     }
 
     const addAvatarResponse = await addNewAvatarForUser(randomAvatar["id"]);
-    const updatePointsResponse = await updateUserPoints(reducedPoints);
+    const updatePointsResponse = await updateUserPointsAndAvatarCount(reducedPoints, newAvatarCount);
 
     if (
       !(
