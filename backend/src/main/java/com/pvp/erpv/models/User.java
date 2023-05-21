@@ -23,7 +23,7 @@ public class User {
     this.avatarId = 3L;
     this.totalAmountOfPoints = 0;
     this.currentPoints = 0;
-    this.amountOfAvatars = 0;
+    this.amountOfAvatars = 1;
     this.amountOfScannedPackages = 0;
     this.scannedPlastic = 0;
     this.scannedPaper = 0;
