@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   cloudContainer: {
     position: "absolute",
-    top: 0,
+    top: 10,
     left: 10,
   },
   cloudImage: {
