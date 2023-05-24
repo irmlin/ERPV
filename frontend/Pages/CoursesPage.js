@@ -50,13 +50,6 @@ export default function CoursesPage({ navigation }) {
           onPress={handleRecyclingCoursesButtonClick}
           thumbnailImage={require("frontend/assets/backgrounds/recycle_codes_cover.png")}
         />
-        <LessonBlockComponent
-          title={"Kaip perdirbamas plastikas?"}
-          durationInMinutes={50}
-          lessonType={LESSON_TYPES.VIDEO}
-          award={AWARDS.RECYCLING_NEWBIE}
-          thumbnailImage={require("frontend/assets/thumbnail-example.png")}
-        />
       </ScrollView>
     </ImageBackground>
   );
