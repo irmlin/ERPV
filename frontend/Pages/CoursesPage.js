@@ -13,13 +13,17 @@ export default function CoursesPage({ navigation }) {
   const { width, height } = Dimensions.get("window");
   const fontScale = Math.min(width, height) / 400;
 
+  const handleRecyclingCoursesButtonClick = () => {
+    navigation.navigate("Page1");
+  };
+
   const styles = StyleSheet.create({
     textBlock: {
       width: "75%",
       textAlign: "center",
       color: "white",
       alignSelf: "center",
-      marginTop: 35,
+      marginTop: 80,
       marginBottom: 25,
       fontWeight: "bold",
       fontSize: 28 * fontScale,
@@ -39,11 +43,12 @@ export default function CoursesPage({ navigation }) {
       <ScrollView>
         <Text style={styles.textBlock}>Visos pamokėlės</Text>
         <LessonBlockComponent
-          title={"Kaip perdirbamas popierius?"}
+          title={"Kaip ženklinamos rūšiuojamos atliekos?"}
           durationInMinutes={5}
           lessonType={LESSON_TYPES.READ}
           award={AWARDS.RECYCLING_NERD}
-          thumbnailImage={require("frontend/assets/thumbnail-example.png")}
+          onPress={handleRecyclingCoursesButtonClick}
+          thumbnailImage={require("frontend/assets/backgrounds/recycle_codes_cover.png")}
         />
         <LessonBlockComponent
           title={"Kaip perdirbamas plastikas?"}
