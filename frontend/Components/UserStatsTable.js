@@ -85,7 +85,7 @@ export default function StatsTable() {
           <Text style={styles.label}>Neteisingai atsakyti klausimai: </Text>
           <Text style={styles.value}>{ userData['amountOfQuestions'] - userData['correctAnswers'] }</Text>
         </View>
-        <View style={[styles.row, styles.uneven_row]}>
+        {/* <View style={[styles.row, styles.uneven_row]}>
           <Text style={styles.label}>Nuskenuota plastiko:</Text>
           <Text style={styles.value}>{ userData['scannedPlastic'] }</Text>
         </View>
@@ -100,7 +100,7 @@ export default function StatsTable() {
         <View style={[styles.row, styles.even_row, styles.last_row]}>
           <Text style={styles.label}>Avatarų kiekis:</Text>
           <Text style={styles.value}>{ userData['amountOfAvatars'] }</Text>
-        </View>
+        </View> */}
       </View>
     </View>
   );

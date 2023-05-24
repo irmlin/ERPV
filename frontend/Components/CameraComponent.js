@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
 import * as FileSystem from "expo-file-system";
 import {
   StyleSheet,
@@ -395,7 +395,7 @@ export default function CameraComponent() {
             }}
           >
             <ImageBackground
-              source={SCAN_PAGE_DOG}
+              source={avatar}
               resizeMode="contain"
               style={styles.bottomImage}
             />
