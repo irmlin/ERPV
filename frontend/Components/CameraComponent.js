@@ -22,6 +22,9 @@ import { RECYCLING_GROUPS, SCANNER_STATES } from "../data/RecyclingCodesData";
 import FadeView from "./FadeAnimation";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import ScannerGuidePopup from "./ScannerGuidePopup";
+import { fetchAvatarJSON } from "../data/AvatarData";
+import { fetchUserJSON } from "../data/DBUserData";
+import ImageImport from "../data/ImageImport";
 
 export default function CameraComponent() {
   const cameraRef = useRef(null);
@@ -52,6 +55,40 @@ export default function CameraComponent() {
     text: SCANNER_STATES.SUCCESS_YELLOW.TEXT,
     visible: false,
   });
+
+  const [userData, setUserData] = useState([]);
+  const [avatarData, setAvatarData] = useState([]);
+  const [avatar, setAvatar] = useState(null);
+
+  useEffect(() => {
+    fetchAvatarJSON()
+      .then(data => {
+        setAvatarData(data);
+        fetchUserJSON()
+          .then(userData => {
+            setUserData(userData);
+            getImage(userData, data);
+          })
+          .catch(error => console.error(error));
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  const getImage = async (userData, avatarData) => {
+    const avatar = avatarData.find(item => item.id === userData.avatarId);
+    if (avatar) {
+      const pictureName = avatar.pictureName;
+      const imageName = pictureName.toLowerCase().split("-")[0];
+      const image = ImageImport[imageName];
+      if (image !== undefined) {
+        setAvatar(image);
+      } else {
+        console.warn(`Image not found for pictureName: ${pictureName}`);
+      }
+    } else {
+      console.warn(`Avatar not found for id: ${userData.avatarId}`);
+    }
+  };
 
   const handleOpenPopup = () => {
     setPopUpOpen(true);
@@ -429,7 +466,6 @@ export default function CameraComponent() {
               style={styles.info_button}
               onPress={handleOpenPopup}
             >
-              {/* <Icon source={require("./info-icon.png")} style={styles.info_button_icon} /> */}
               <Icon size={30} color="black" name="info-circle" />
             </TouchableOpacity>
           </View>
