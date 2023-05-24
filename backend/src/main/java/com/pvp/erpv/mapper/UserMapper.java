@@ -10,6 +10,7 @@ public class UserMapper {
     public UserDto fromModelToDto(User user) {
         return new UserDto(
             user.getFullName(),
+            user.getUsername(),
             user.getAvatarId(),
             user.getTotalAmountOfPoints(),
             user.getCurrentPoints(),

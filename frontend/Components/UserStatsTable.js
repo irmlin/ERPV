@@ -64,24 +64,29 @@ export default function StatsTable() {
       fetchUserJSON()
         .then(data => setUserData(data))
         .catch(error => console.error(error));
+      console.log(userData)
   }, []);
 
   return (
     <View style={styles.rowContainer}>
       <View style={styles.container}>
-        <View style={[styles.row, styles.uneven_row, styles.first_row]}>
+      <View style={[styles.row, styles.uneven_row, styles.first_row]}>
+          <Text style={styles.label}>Vartotojo vardas:</Text>
+          <Text style={styles.value}>{ userData['username'] }</Text>
+        </View>
+        <View style={[styles.row, styles.even_row]}>
           <Text style={styles.label}>Surinktų taškų skaičius:</Text>
           <Text style={styles.value}>{ userData['totalAmountOfPoints'] }</Text>
         </View>
-        <View style={[styles.row, styles.even_row]}>
+        <View style={[styles.row, styles.uneven_row]}>
           <Text style={styles.label}>Atsakytų klausimų kiekis:</Text>
           <Text style={styles.value}>{ userData['amountOfQuestions'] }</Text>
         </View>
-        <View style={[styles.row, styles.uneven_row]}>
+        <View style={[styles.row, styles.even_row]}>
           <Text style={styles.label}>Teisingai atsakyti klausimai:</Text>
           <Text style={styles.value}>{ userData['correctAnswers'] }</Text>
         </View>
-        <View style={[styles.row, styles.even_row]}>
+        <View style={[styles.row, styles.uneven_row]}>
           <Text style={styles.label}>Neteisingai atsakyti klausimai: </Text>
           <Text style={styles.value}>{ userData['amountOfQuestions'] - userData['correctAnswers'] }</Text>
         </View>
