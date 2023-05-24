@@ -3,13 +3,55 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, Image, TouchableOpacity, Modal, Animated, StyleSheet, ImageBackground, Pressable, ScrollView } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from "react-native";
+import { fetchAvatarJSON } from '../data/AvatarData';
+import { fetchUserJSON } from '../data/DBUserData';
+import ImageImport from "../data/ImageImport";
 import { fetchQuestionsJSON, putQuestionData } from '../data/DBQuizData';
 
 
 export default function Quiz() {
 
+  const [userData, setUserData] = useState([]);
+  const [avatarData, setAvatarData] = useState([]);
+  const [avatar, setAvatar] = useState(null);
+
+  useEffect(() => {
+    fetchAvatarJSON()
+      .then(data => {
+        setAvatarData(data);
+        fetchUserJSON()
+          .then(userData => {
+            setUserData(userData);
+            getImage(userData, data);
+          })
+          .catch(error => console.error(error));
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  const getImage = async (userData, avatarData) => {
+    const avatar = avatarData.find(item => item.id === userData.avatarId);
+    if (avatar) {
+      const pictureName = avatar.pictureName;
+      const imageName = pictureName.toLowerCase().split("-")[0];
+      const image = ImageImport[imageName];
+      if (image !== undefined) {
+        setAvatar(image);
+      } else {
+        console.warn(`Image not found for pictureName: ${pictureName}`);
+      }
+    } else {
+      console.warn(`Avatar not found for id: ${userData.avatarId}`);
+    }
+  };
+
+
+
+
+  
   const navigation = useNavigation();
   const [allQuestions, setQuestions] = useState([]);
+
   useEffect(() => {
     // Fetch the questions from the API
     fetchQuestionsJSON()
@@ -441,12 +483,20 @@ export default function Quiz() {
 
                   <Text style={{
                     fontSize: 30, color: '#171717', fontWeight: '700', marginTop: '2%', textAlign: 'center'
-                  }}> Atsakei teisingai į {score} klausimus iš {allQuestions.length}.
+                  }}> Atsakei teisingai į {score} 
+                      {score == 1 ?' klausimą ' 
+                          : ' klausimus '}
+                   iš {allQuestions.length}.
                   </Text>
 
+                  
                   <Text style={{
                     fontSize: 30, color: '#171717', fontWeight: '700', marginTop: '2%', textAlign: 'center', marginBottom: '2%'
-                  }}> Surinkai {score * 5} taškus!
+                  }}> Surinkai {score * 5} 
+                        {score == 1 ?' taškus!' 
+                          : score == 5 ?' taškus!' 
+                          : score == 7 ?' taškus!' 
+                          : ' taškų!'}
                   </Text>
                 </View>
 
@@ -463,18 +513,7 @@ export default function Quiz() {
                   }}>Grįžti į pagrindinį langą</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                  onPress={toAvatarPage}
-                  style={{
-                    backgroundColor: '#FAC643',
-                    padding: 15, width: '80%', borderRadius: 20,
-                    marginBottom: '2%', marginTop: '2%',
-                    borderColor: 'white', borderWidth: 5,
-                  }}>
-                  <Text style={{
-                    textAlign: 'center', color: 'black', fontSize: 20, fontWeight: '700'
-                  }}>Pirkti naują avatarą</Text>
-                </TouchableOpacity>
+                
 
                 {/* Retry Quiz button */}
                 <TouchableOpacity
@@ -492,7 +531,7 @@ export default function Quiz() {
 
                 <View style={styles.bottomContainer}>
                   <Image
-                    source={require("frontend/assets/avatars/Monkey1-01.png")}
+                    source={avatar}
                     style={styles.avatar}
                   />
 
