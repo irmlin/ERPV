@@ -15,12 +15,13 @@ import { CameraContext } from "../Contexts/CameraContext";
 import { GlobalAlertContext } from "../Contexts/GlobalAlertContext";
 import { BACKGROUND } from "../assets/theme";
 import { logout } from "../Services/AuthService";
-import MenuButton  from "./MenuButton";
+import MenuButton from "./MenuButton";
 
 export default function Menu() {
   const navigation = useNavigation();
   const { cameraStarted, setCameraStarted } = useContext(CameraContext);
-  const { setAlertOpen, setAlertColor, setAlertText } = useContext(GlobalAlertContext);
+  const { setAlertOpen, setAlertColor, setAlertText } =
+    useContext(GlobalAlertContext);
 
   const handleStartCamera = async () => {
     const status = await Camera.requestCameraPermissionsAsync();
@@ -29,7 +30,7 @@ export default function Menu() {
       setCameraStarted(true);
     } else {
       setAlertColor("error");
-      setAlertText("Kameros prieiga atmesta!")
+      setAlertText("Kameros prieiga atmesta!");
       setAlertOpen(true);
     }
   };
@@ -59,38 +60,38 @@ export default function Menu() {
       require("frontend/assets/icons/profilio_ikona-01.png"),
       "Profilis",
       "#FAC643",
-      handleProfileButtonClick
+      handleProfileButtonClick,
     ],
     [
       require("frontend/assets/icons/avataru_ikona-01.png"),
       "Avatarai",
       "#70D66E",
-      handleAvatarButtonClick
+      handleAvatarButtonClick,
     ],
     [
       require("frontend/assets/icons/klausimyno_ikona-01.png"),
       "Klausimynas",
       "#6DD8E7",
-      handleQuizButtonClick
+      handleQuizButtonClick,
     ],
     [
       require("frontend/assets/icons/skenavimo_ikona-01.png"),
       "Skenavimas",
       "#FAC643",
-      handleStartCamera
+      handleStartCamera,
     ],
     [
       require("frontend/assets/icons/laboratorijos_ikona.png"),
-      "Mokslo kampelis",
+      "Laboratorija",
       "#70D66E",
-      handleCoursesButtonClick
+      handleCoursesButtonClick,
     ],
     [
       require("frontend/assets/badge.png"),
-      "Lootbox'ai",
+      "Loterija",
       "#6DD8E7",
-      handleLootboxButtonClick
-    ]
+      handleLootboxButtonClick,
+    ],
   ];
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -152,7 +153,7 @@ export default function Menu() {
       width: "9%",
       marginEnd: "10%",
       position: "absolute",
-      top: "5%"
+      top: "5%",
     },
     button2: {
       alignSelf: "flex-start",
@@ -195,10 +196,7 @@ export default function Menu() {
 
   return (
     <View style={styles.parent}>
-      <ImageBackground
-        source={BACKGROUND}
-        style={styles.image}
-      >
+      <ImageBackground source={BACKGROUND} style={styles.image}>
         <Modal
           animationType="slide"
           transparent={true}
@@ -247,8 +245,7 @@ export default function Menu() {
           ></Image>
         </View>
         <>
-        {
-          menuButtonsInfo.map((info, i) => (
+          {menuButtonsInfo.map((info, i) => (
             <MenuButton
               iconImage={info[0]}
               text={info[1]}
@@ -256,8 +253,7 @@ export default function Menu() {
               onClick={info[3]}
               key={i}
             />
-          ))
-        }
+          ))}
         </>
       </ImageBackground>
     </View>

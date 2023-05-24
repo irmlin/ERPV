@@ -14,11 +14,10 @@ export default function LessonBlockComponent({
   lessonType,
   thumbnailImage,
   award,
+  onPress,
 }) {
   const { width, height } = Dimensions.get("window");
   const fontScale = Math.min(width, height) / 400;
-
-  const onStartLessonButtonPress = () => {};
 
   const styles = StyleSheet.create({
     container: {
@@ -36,7 +35,7 @@ export default function LessonBlockComponent({
     iconRow: {
       flexDirection: "row",
       justifyContent: "flex-start",
-      alignItems: "center"
+      alignItems: "center",
     },
     title: {
       fontSize: 20 * fontScale,
@@ -58,7 +57,7 @@ export default function LessonBlockComponent({
     },
     iconWithTextContainer: {
       alignItems: "center",
-      width: "33%"
+      width: "33%",
     },
     textUnderIcon: {
       fontSize: 12 * fontScale,
@@ -67,7 +66,7 @@ export default function LessonBlockComponent({
     },
     iconWithoutText: {
       width: width * 0.25,
-      height: width * 0.25
+      height: width * 0.25,
     },
     button: {
       backgroundColor: "#4CBB17",
@@ -76,13 +75,13 @@ export default function LessonBlockComponent({
       borderRadius: 15,
       alignSelf: "center",
       marginTop: 16,
-      width: "40%"
+      width: "40%",
     },
     buttonText: {
       color: "white",
       fontSize: 16,
       fontWeight: "bold",
-      textAlign: "center"
+      textAlign: "center",
     },
   });
 
@@ -119,10 +118,7 @@ export default function LessonBlockComponent({
           </Text>
         </View>
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={onStartLessonButtonPress}
-      >
+      <TouchableOpacity style={styles.button} onPress={onPress}>
         <Text style={styles.buttonText}>Pradėti</Text>
       </TouchableOpacity>
     </View>
